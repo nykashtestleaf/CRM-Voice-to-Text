@@ -72,6 +72,7 @@ body {
 
 /* All real content above bg */
 .header, .main { position: relative; z-index: 1; }
+.main { max-width: 100% !important; padding: 16px !important; box-sizing: border-box; }
 
 /* ── Keyframes ── */
 @keyframes scanLine    { 0%{left:-80%} 100%{left:180%} }
@@ -96,7 +97,7 @@ body {
 ══════════════════════════════════ */
 .header {
   position: relative; overflow: hidden;
-  padding: 14px 32px;
+  padding: 12px 18px;
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(255,255,255,0.68);
   backdrop-filter: var(--blur);
@@ -211,8 +212,16 @@ body {
 /* ══════════════════════════════════
    LAYOUT
 ══════════════════════════════════ */
-.main { max-width:1100px; margin:0 auto; padding:28px 22px; }
-.grid { display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:20px; align-items:stretch; }
+.main { max-width:100%; margin:0; padding:14px 18px; box-sizing:border-box; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 16px;
+  height: calc(100vh - 220px);
+  min-height: 460px;
+  align-items: stretch;
+}
 
 /* ══════════════════════════════════
    PANEL — light frosted glass recipe
@@ -223,6 +232,7 @@ body {
   position: relative; overflow: hidden;
   display: flex; flex-direction: column;
   height: 100%;
+  box-sizing: border-box;
   /* alpha-gradient fill — proper glassmorphism, not flat opacity */
   background:
     linear-gradient(145deg,
@@ -259,7 +269,7 @@ body {
   text-transform:uppercase; letter-spacing:1px;
   display:flex; align-items:center; gap:6px;
 }
-.panel-body { padding:17px; position:relative; z-index:1; flex:1; display:flex; flex-direction:column; }
+.panel-body { padding:14px; position:relative; z-index:1; flex:1; display:flex; flex-direction:column; min-height:0; }
 
 /* Per-panel: top accent stripe */
 .api-panel::after    { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--cyan)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
@@ -278,7 +288,7 @@ body {
 ══════════════════════════════════ */
 .result-empty {
   display:flex; flex-direction:column; align-items:center; justify-content:center;
-  flex:1; padding:20px 16px; gap:10px; color:var(--t4);
+  flex:1; padding:12px 16px; gap:8px; color:var(--t4);
 }
 .result-empty-icon { font-size:32px; opacity:0.45; }
 .result-empty-text { font-size:13px; text-align:center; line-height:1.65; color:var(--t3); }
@@ -357,7 +367,7 @@ body {
    NOTE PANEL — textarea + helpers
 ══════════════════════════════════ */
 .note-textarea {
-  width:100%; flex:1; min-height:120px;
+  width:100%; flex:1; min-height:60px; box-sizing:border-box;
   padding:12px 14px; border-radius:12px;
   background:rgba(255,255,255,0.65);
   border:1px solid rgba(255,255,255,0.9);
@@ -652,7 +662,8 @@ body {
 .tamil-btn.active { background:linear-gradient(135deg,var(--cyan),var(--violet)) !important; }
 
 .mic-area {
-  display:flex; align-items:center; gap:15px; padding:14px;
+  display:flex; align-items:center; gap:15px; padding:12px;
+  flex:1;
   background:rgba(255,255,255,0.55);
   border-radius:var(--r-sm);
   border:1px solid rgba(255,255,255,0.90);
@@ -677,6 +688,38 @@ body {
 .mic-info { flex:1; }
 .mic-status    { font-size:13.5px; font-weight:700; color:var(--t1); margin-bottom:2px; }
 
+
+/* ══════════════════════════════════
+   MOBILE RESPONSIVE
+══════════════════════════════════ */
+@media (max-width: 768px) {
+  .header { padding: 10px 14px; }
+  .header-title { font-size: 15px; }
+  .header-sub { display: none; }
+  .logo { width: 34px; height: 34px; font-size: 16px; }
+  .main { padding: 10px 12px; }
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    height: auto;
+    gap: 12px;
+  }
+  .panel { min-height: 200px; }
+  .note-textarea { min-height: 100px; }
+  .run-btn { font-size: 12px; padding: 14px; letter-spacing: 0.8px; }
+  .lang-row { flex-wrap: wrap; }
+  .mic-area { padding: 10px; gap: 10px; }
+  .ft-dropdown { right: -60px; min-width: 200px; }
+}
+@media (max-width: 480px) {
+  .header-right { gap: 6px; }
+  .ft-trigger-btn { padding: 5px 9px; font-size: 10px; }
+  .header-badge { display: none; }
+  .grid { gap: 10px; }
+  .panel-header { padding: 10px 12px 8px; }
+  .panel-body { padding: 10px; }
+  .run-btn { font-size: 11px; padding: 12px; }
+}
 </style>
 </head>
 <body>
@@ -697,7 +740,7 @@ body {
   <div class="header-right">
     <!-- Fine-tune dropdown trigger -->
     <div style="position:relative;" id="ftDropdownWrap">
-      <button id="ftDropdownBtn" onclick="toggleFtDropdown()" class="ft-trigger-btn">
+      <button id="ftDropdownBtn" onclick="toggleFtDropdown(event)" class="ft-trigger-btn">
         🧠 Fine-tune
         <span id="ftCountPill" class="ft-pill">0</span>
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" id="ftChevron"><polyline points="6,9 12,15 18,9"/></svg>
@@ -770,22 +813,8 @@ body {
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
           Voice Input
         </div>
-        <!-- ── JARVIS WAKEWORD BAR ── -->
-        <div class="jarvis-bar">
-          <div class="jarvis-badge jarvis-off" id="jarvisBadge">
-            <span id="jarvisDot">🔇</span>
-            <span id="jarvisLabel">Jarvis: OFF</span>
-          </div>
-          <button class="jarvis-toggle-btn" id="jarvisToggleBtn" onclick="toggleJarvis()">⚫ Enable Jarvis</button>
-        </div>
-        <div class="jarvis-tip">
-          Say <strong>"Hey Jarvis"</strong> to start recording · <strong>"Execute the Process"</strong> to run agent
-        </div>
-
-        <div class="lang-row">
-          <button class="lang-btn" data-lang="en-IN">🇮🇳 Indian</button>
-          <button class="lang-btn active" data-lang="en-US">🇺🇸 US</button>
-          <button class="lang-btn" data-lang="en-GB">🇬🇧 UK</button>
+                <div class="lang-row">
+          <button class="lang-btn active" data-lang="en-IN" data-mode="english">🇮🇳 English</button>
           <button class="lang-btn tamil-btn" data-lang="ta-IN" data-mode="tamil">🌟 Tamil</button>
         </div>
       </div>
@@ -873,7 +902,7 @@ body {
   </div><!-- end grid -->
 
   <!-- RUN AGENT — full width BOTTOM -->
-  <button class="run-btn" id="runBtn" style="margin-top:20px;margin-bottom:0;">
+  <button class="run-btn" id="runBtn" style="margin-top:12px;margin-bottom:0;">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
     RUN AGENT — Convert to CRM Note
   </button>
@@ -884,9 +913,8 @@ body {
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div class="modal-title">🧠 Fine-tune Training Data</div>
-      <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-header" style="justify-content:flex-end;padding:8px 14px 0;">
+      <button class="modal-close" id="modalClose" style="display:none;"></button>
     </div>
     <div class="modal-body" id="modalBody"></div>
   </div>
@@ -906,11 +934,6 @@ let restartTimer  = null;
 
 // ── Language / mode state ──
 let tamilMode   = false;
-
-// ── Wakeword state ──
-let wakeRecognition  = null;
-let wakeListening    = false;
-let wakeword_enabled = false;
 
 
 // ── SYSTEM PROMPT ──
@@ -977,7 +1000,7 @@ CRM: "Spoke with a prospect having 2 years of experience and currently on a care
 Now convert the following raw voice note into a clean CRM paragraph using the exact style above:`;
 
 // ── STATE (global so all functions can access) ──
-let currentLang = 'en-US';
+let currentLang = 'en-IN';
 let finalTranscript = '';
 let lastOutputText = '';
 
@@ -1228,8 +1251,6 @@ async function startRecording() {
 
   finalTranscript = noteInput.value.trim();
   isRecording = true;
-  // Pause wake listener while main recording is active
-  if (wakeListening) stopWakeListener();
   setMicUI(true);
   createRecognition();
 }
@@ -1238,175 +1259,6 @@ async function startRecording() {
 // ══════════════════════════════════════════════════
   //  JARVIS WAKEWORD + EXECUTE TRIGGER SYSTEM
   // ══════════════════════════════════════════════════
-
-  // ── Wake word variants (starts recording) ──
-  const WAKE_VARIANTS = [
-    'hey jarvis', 'hi jarvis', 'hey javis', 'hi javis',
-    'hey jarvas', 'hi jarvas', 'hey jarvi', 'hi jarvi',
-    'hey jarwis', 'hi jarwis', 'a jarvis', 'hey travis',
-    'hey service', 'hey servers', 'hey services',
-  ];
-
-  // ── Execute trigger variants (ends recording + runs agent) ──
-  const TRIGGER_PHRASE = 'execute the process';
-  const TRIGGER_VARIANTS = [
-    'execute the process',
-    'execute process',
-    'execute the processes',
-    'executed the process',
-    'execute this process',
-    'execute da process',
-    'execute de process',
-    'execute the processor',
-    'execute the progress',
-  ];
-
-  // ── Wakeword listener state ──
-
-  function normalise(txt) {
-    return txt.toLowerCase().replace(/[^a-z\s]/g,'').replace(/\s+/g,' ').trim();
-  }
-  function hasWake(txt)    { const n=normalise(txt); return WAKE_VARIANTS.some(v=>n.includes(v)); }
-  function hasTrigger(txt) { const n=normalise(txt); return TRIGGER_VARIANTS.some(v=>n.includes(v)); }
-
-  function stripPattern(txt, variants) {
-    let out = txt;
-    variants.forEach(v => {
-      const re = new RegExp(v.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
-      out = out.replace(re,'');
-    });
-    return out.replace(/\s{2,}/g,' ').trim();
-  }
-
-  // ── UI helpers ──
-  function setWakeUI(state) {
-    // state: 'off' | 'listening' | 'detected'
-    const btn  = document.getElementById('jarvisBadge');
-    const dot  = document.getElementById('jarvisDot');
-    const lbl  = document.getElementById('jarvisLabel');
-    if (!btn) return;
-    btn.className = 'jarvis-badge jarvis-' + state;
-    if (state === 'off') {
-      dot.textContent = '🔇'; lbl.textContent = 'Jarvis: OFF';
-    } else if (state === 'listening') {
-      dot.textContent = '👂'; lbl.textContent = 'Jarvis: Listening…';
-    } else if (state === 'detected') {
-      dot.textContent = '⚡'; lbl.textContent = 'Jarvis: Activated!';
-    }
-  }
-
-  // ── Start background wakeword listener ──
-  function startWakeListener() {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR || isRecording) return;
-    wakeListening = true;
-    setWakeUI('listening');
-
-    function spawnWake() {
-      if (!wakeListening || isRecording) return;
-      try {
-        wakeRecognition = new SR();
-        wakeRecognition.lang = currentLang;
-        wakeRecognition.continuous = false;
-        wakeRecognition.interimResults = true;
-        wakeRecognition.maxAlternatives = 3;
-
-        wakeRecognition.onresult = (e) => {
-          for (let i = e.resultIndex; i < e.results.length; i++) {
-            const alts = [];
-            for (let a = 0; a < e.results[i].length; a++) alts.push(e.results[i][a].transcript);
-            const detected = alts.some(a => hasWake(a));
-            if (detected) {
-              // Stop wake listener
-              wakeListening = false;
-              try { wakeRecognition.onend = null; wakeRecognition.stop(); } catch(ex){}
-              wakeRecognition = null;
-
-              // Flash badge
-              setWakeUI('detected');
-              showJarvisActivation();
-
-              // Small delay then start main recording
-              setTimeout(() => {
-                if (!isRecording) startRecording();
-              }, 600);
-              return;
-            }
-          }
-        };
-
-        wakeRecognition.onerror = (e) => {
-          if (['not-allowed','service-not-allowed'].includes(e.error)) {
-            wakeListening = false; setWakeUI('off'); wakeword_enabled = false;
-            updateJarvisBtn();
-            return;
-          }
-          // For network/no-speech errors just restart
-        };
-
-        wakeRecognition.onend = () => {
-          if (wakeListening && !isRecording) {
-            setTimeout(spawnWake, 300);
-          }
-        };
-
-        wakeRecognition.start();
-      } catch(ex) {
-        if (wakeListening) setTimeout(spawnWake, 600);
-      }
-    }
-    spawnWake();
-  }
-
-  // ── Stop background wakeword listener ──
-  function stopWakeListener() {
-    wakeListening = false;
-    if (wakeRecognition) {
-      try { wakeRecognition.onend = null; wakeRecognition.stop(); } catch(ex){}
-      wakeRecognition = null;
-    }
-    setWakeUI('off');
-  }
-
-  // ── Toggle Jarvis wakeword on/off ──
-  function toggleJarvis() {
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { showVoiceWarning('Voice wakeword requires Chrome or Edge on HTTPS.'); return; }
-    wakeword_enabled = !wakeword_enabled;
-    updateJarvisBtn();
-    if (wakeword_enabled) {
-      startWakeListener();
-    } else {
-      stopWakeListener();
-    }
-  }
-
-  function updateJarvisBtn() {
-    const btn = document.getElementById('jarvisToggleBtn');
-    if (!btn) return;
-    if (wakeword_enabled) {
-      btn.textContent = '🟢 Jarvis ON';
-      btn.classList.add('active');
-    } else {
-      btn.textContent = '⚫ Enable Jarvis';
-      btn.classList.remove('active');
-    }
-  }
-
-  // ── Jarvis activation animation ──
-  function showJarvisActivation() {
-    const lb = document.getElementById('liveBubble');
-    const liveText = document.getElementById('liveText');
-    lb.classList.add('show');
-    lb.style.borderLeftColor = '#7209b7';
-    lb.style.background = 'rgba(114,9,183,0.10)';
-    liveText.innerHTML = '🤖 <strong style="color:#7209b7">JARVIS ACTIVATED</strong> — Recording started…';
-    setTimeout(() => {
-      lb.style.borderLeftColor = '';
-      lb.style.background = '';
-    }, 2000);
-  }
-
 
   function flashTriggerFeedback() {
     const micBtn = document.getElementById('micBtn');
@@ -1466,8 +1318,7 @@ function createRecognition() {
           setTimeout(() => {
             document.getElementById('liveBubble').classList.remove('show');
             runAgentWithTamil();
-            if (wakeword_enabled) setTimeout(() => { if (!wakeListening && !isRecording) startWakeListener(); }, 3500);
-          }, 900);
+                }, 900);
           return;
         }
         finalTranscript += (finalTranscript ? ' ' : '') + primaryText.trim();
@@ -1493,8 +1344,7 @@ function createRecognition() {
           setTimeout(() => {
             document.getElementById('liveBubble').classList.remove('show');
             runAgentWithTamil();
-            if (wakeword_enabled) setTimeout(() => { if (!wakeListening && !isRecording) startWakeListener(); }, 3500);
-          }, 900);
+                }, 900);
           return;
         }
       }
@@ -1532,10 +1382,6 @@ function stopRecording() {
   document.getElementById('liveBubble').classList.remove('show');
   noteInput.value = noteInput.value.trim();
   updateCharCount();
-  // Resume Jarvis wake listener if it was enabled
-  if (wakeword_enabled && !wakeListening) {
-    setTimeout(() => startWakeListener(), 800);
-  }
   updateCharCount();
 }
 
@@ -1858,7 +1704,8 @@ function escHtml(t) {
 }
 
 // ── DROPDOWN TOGGLE ──
-function toggleFtDropdown() {
+function toggleFtDropdown(e) {
+  if (e) e.stopPropagation();
   const dd = document.getElementById('ftDropdown');
   const ch = document.getElementById('ftChevron');
   const open = dd.style.display === 'block';
