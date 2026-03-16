@@ -1056,7 +1056,29 @@ runBtn.addEventListener('click', runAgentWithTamil);
   // Check speech support
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   if (!SR) showVoiceWarning('Voice input requires Chrome or Edge. Paste notes manually.');
-  if (location.protocol === 'file:') showVoiceWarning('<strong>Voice needs HTTPS.</strong> Publish to Netlify or run via localhost for mic to work.');
+  if (location.protocol === 'file:') {
+    // Show prominent HTTPS required overlay
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(15,20,50,0.92);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);';
+    overlay.innerHTML = `
+      <div style="background:#fff;border-radius:20px;padding:36px 40px;max-width:480px;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,0.3);">
+        <div style="font-size:48px;margin-bottom:16px;">🔒</div>
+        <div style="font-size:20px;font-weight:800;color:#0f1432;margin-bottom:12px;">HTTPS Required</div>
+        <div style="font-size:14px;color:#4a5080;line-height:1.7;margin-bottom:24px;">
+          This file is opened from your desktop (<code style="background:#f0f4ff;padding:2px 6px;border-radius:4px;font-size:12px;">file://</code>).<br><br>
+          Both the <strong>microphone</strong> and <strong>Groq API</strong> require a secure HTTPS connection to work.<br><br>
+          <strong>Fix in 30 seconds:</strong>
+        </div>
+        <div style="background:#f0f4ff;border-radius:12px;padding:16px;text-align:left;font-size:13px;color:#2d3355;line-height:2;">
+          1. Go to <a href="https://netlify.com/drop" target="_blank" style="color:#4361ee;font-weight:700;">netlify.com/drop</a><br>
+          2. Drag &amp; drop this <code>index.html</code> file<br>
+          3. Get a free HTTPS URL instantly ⚡
+        </div>
+        <div style="margin-top:16px;font-size:12px;color:#94a3b8;">Or run <code style="background:#f0f4ff;padding:2px 6px;border-radius:4px;">npx serve .</code> locally</div>
+        <button onclick="this.parentElement.parentElement.remove()" style="margin-top:20px;background:#4361ee;color:#fff;border:none;border-radius:10px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;">Continue Anyway</button>
+      </div>`;
+    document.body.appendChild(overlay);
+  }
 
   // Char count init
   updateCharCount();
@@ -1218,20 +1240,7 @@ async function startRecording() {
   document.getElementById('micStatus').textContent = 'Waiting for permission...';
   document.getElementById('micHint').textContent   = 'Click Allow in the browser popup ↑';
 
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    stream.getTracks().forEach(t => t.stop());
-  } catch(err) {
-    document.getElementById('micStatus').textContent = 'Click mic to start speaking';
-    document.getElementById('micHint').textContent   = 'Words will appear in the note box automatically';
-    if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-      showVoiceWarning('<strong>Mic blocked.</strong> Click 🔒 in address bar → Microphone → Allow → Refresh page.');
-    } else {
-      showVoiceWarning('Microphone error: ' + err.message);
-    }
-    return;
-  }
-
+  // Go straight to recognition — it handles permission itself
   finalTranscript = noteInput.value.trim();
   isRecording = true;
   setMicUI(true);
