@@ -713,7 +713,7 @@ body {
           <button id="dataExportBtn" class="ft-dd-btn ft-dd-export">
             ⬇ Export JSONL for Fine-tuning
           </button>
-          <button id="          <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
+          <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
             🗑 Clear All Data
           </button>
         </div>
@@ -1053,7 +1053,7 @@ runBtn.addEventListener('click', runAgentWithTamil);
   updateCharCount();
 
 // ── Additional event listeners ──
-(document.getElementById('apiEditBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+document.getElementById('apiEditBtn').addEventListener('click', () => {
   unlockApiKey();
   // Clear connected state so user must re-connect
   document.getElementById('apiPanel').classList.remove('connected');
@@ -1064,7 +1064,7 @@ runBtn.addEventListener('click', runAgentWithTamil);
   document.getElementById('connectBtn').classList.remove('connected-state');
 });
 
-(document.getElementById('copyKeyBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+document.getElementById('copyKeyBtn').addEventListener('click', () => {
   const btn = document.getElementById('copyKeyBtn');
   const copy = (text) => {
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1093,11 +1093,11 @@ runBtn.addEventListener('click', runAgentWithTamil);
   });
 });
 
-(document.getElementById('dataViewBtn') || {addEventListener:()=>{}}).addEventListener('click', openModal);
-(document.getElementById('modalClose') || {addEventListener:()=>{}}).addEventListener('click', closeModal);
-(document.getElementById('modalOverlay') || {addEventListener:()=>{}}).addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
+document.getElementById('dataViewBtn').addEventListener('click', openModal);
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
 
-(document.getElementById('dataExportBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+document.getElementById('dataExportBtn').addEventListener('click', () => {
   const records = getTrainingData();
   if (records.length === 0) { alert('No data to export yet. Run the agent first.'); return; }
   const jsonl = records.map(r => JSON.stringify(r.finetune)).join('\n');
@@ -1110,7 +1110,7 @@ runBtn.addEventListener('click', runAgentWithTamil);
   URL.revokeObjectURL(url);
 });
 
-(document.getElementById('dataClearBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+document.getElementById('dataClearBtn').addEventListener('click', () => {
   if (confirm('Clear all ' + getTrainingData().length + ' saved sessions? This cannot be undone.')) {
     localStorage.removeItem(STORAGE_KEY);
     updateDataCount();
