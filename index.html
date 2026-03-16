@@ -918,10 +918,14 @@ body {
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header" style="
+        <div class="modal-header" style="justify-content:flex-end;padding:8px 14px 0;">
+      <button class="modal-close" id="modalClose" style="display:none;"></button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
 
 <script>
-// ─
 // ── DOM refs (assigned inside DOMContentLoaded) ──
 let noteInput, apiKeyInput, runBtn, micBtn, connectBtn, copyBtn, refineBtn, newNoteBtn, clearBtn;
 
