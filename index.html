@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CRM Note Agent — Zoho</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/png" href="data:image/png;base64,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"/>
+<link rel="apple-touch-icon" href="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA8AD4DASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABwMEBQYIAgEA/8QAPxAAAQMDAgMCCQYPAAAAAAAAAQIDBAAFEQYhBxIxQVETIiMyYXGBkaGTlLGz0tMUFRcmNkJGUlZ0dZKyweH/xAAaAQACAwEBAAAAAAAAAAAAAAAEBQEDBgcC/8QALBEAAQMDAQUHBQAAAAAAAAAAAQACAwQFESESMUGBwQYTUXGRsfAyYaHR4f/aAAwDAQACEQMRAD8AzKlNLxIz8p9DEZlx55ZwhttJUpR7gBua8aQVKASCSdgBWqOF2j7donTzMiQw25eZDYVIeUMlGf1E9wHx+hvHGXnAWUuFwbSM2jvKAsXhhruQ0HW9Nywk9OcpQfcog0r+SzXg66df+Vb+1WkZd9VzHxqYuX1f71N4rWHjUH1/iRt7R7R+lZ7PC3Xf8Ov/ACrf2qg79pbUFiHNdrTLiIzjnWjxM93MNq00b84D59OWrpHuDCok1pt9hwcq0OJCgQfQaKdYcty3PzkEwhvAk0wsgqTSahRB4w6Qa0zfkuQEn8XTAVsDOeQjzk/EY/5VDUKz80LoXljt4TqOQOGVO6PaS5qm0trGUqmspUO8FYrU2opJCikHasv6MH512j+eZ+sFaS1EvyiqbWuIP9f0sp2iBcxnPooR54knerFpjR798jIfXcG4iXCeTLfOT6TuMVVkeVkIa5uXnUE57smpOPabo3KlqYtLr7PglobeAaw6RgY3fB7D1Sn197O71MlFC3ujhxPhw56KvsxaIquVxnbloHjjXlqmeqrXJsN8kWqS4hxbJGFoPiqBAII9hFMYMhSXRg08vttlRraxNmMqivKeUwqOQnKMJSoHKVrG/N3n2dKiYivKitVbJRU0TJTqSNfPii3W7uKl0bRoDp5cE246cr+hILxGXET0JB9BbcyPgKBbid6OPGU50BE/qDf1btBJ4b1z29DFY/l7J1CNhzm/NwU5o0gaotJJ6TWf8xWidSEhxVZlgvrYkNvtqwttQUk9xByK0bEuUfUdhj3SIoEOI8ojO6Fjqk+qjrA5peWHeld1iMjABwz0UM44QrIOCKIOmm5siKlUhxtlS08w5HgMk9pBGx9R7elD+RHWFEYNNlMr7jWsuNqbXxNZtBuOOM9R1UWZ7qRxIBOfvjorFxEXcWpcaHMbYbZQlTjXgnfCBRUfGUpW2TsOwYGMVW4Zy6PXXJYWew09tkNanRtR0EbKSnEWRpy6n3T+GnMsheRvUXxi/QOICdzPR9W5QVd60SuMl7akSY9ljLC0RMqeIO3hCMY9gz76Gjp3rmt3kbJVuLV4laBO7HzQL1lfpqwaY1Fc7DILtvkFAV57ahlC/WP99arLZNOW1Gl7JHRuDmnBVMrAUV2OJ7S2h+FWBLjnapuVyD3FB+mujxHgH9nXPnw+7oXIUe+uwtWOtHi7Vg3SFB92WnQ/lEs8R4I3Gnl/PR93UPfeIdylsKYt7LdubVsVIVzOf3bY9gqlqWaRcUah90q3jBeUTHLKNA4r59wqJUSSTuSe2mbit6UdUabOE5per42r/9k="/>
+<style>
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+  /* Vivid accent palette */
+  --teal:    #00c9a7;
+  --cyan:    #0096c7;
+  --blue:    #4361ee;
+  --violet:  #7209b7;
+  --pink:    #f72585;
+  --amber:   #f8961e;
+  --green:   #06d6a0;
+
+  /* Surface tokens */
+  --surface-0: rgba(255,255,255,0.72);
+  --surface-1: rgba(255,255,255,0.55);
+  --surface-2: rgba(255,255,255,0.38);
+  --surface-inp: rgba(255,255,255,0.65);
+  --surface-inp-fo: rgba(255,255,255,0.90);
+  --surface-dark: rgba(15,20,50,0.82);
+
+  /* Text */
+  --t1: #0f1432;
+  --t2: #1a1f3a;
+  --t3: #2d3355;
+  --t4: #4a5080;
+
+  /* Borders */
+  --bdr: rgba(255,255,255,0.80);
+  --bdr-dim: rgba(255,255,255,0.55);
+
+  /* Shadows */
+  --shadow-card: 0 8px 32px rgba(60,80,180,0.10), 0 2px 8px rgba(60,80,180,0.06);
+  --shadow-lg:   0 16px 48px rgba(60,80,180,0.14), 0 4px 16px rgba(60,80,180,0.08);
+
+  /* Blur */
+  --blur: blur(24px);
+  --blur-sm: blur(14px);
+
+  /* Radii */
+  --r: 22px; --r-sm: 14px; --r-xs: 10px;
+}
+
+/* ── Background: bright white + vivid blobs ── */
+body {
+  min-height: 100vh;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  color: var(--t1);
+  padding-bottom: 80px;
+  overflow-x: hidden;
+  position: relative;
+
+  /* white canvas + four vivid radial blobs */
+  background-color: #f0f4ff;
+  background-image:
+    radial-gradient(ellipse 55% 50% at 5%  10%,  rgba(114,9,183,0.18)  0%, transparent 65%),
+    radial-gradient(ellipse 50% 45% at 95% 90%,  rgba(0,201,167,0.22)  0%, transparent 60%),
+    radial-gradient(ellipse 45% 45% at 90% 8%,   rgba(247,37,133,0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 42% 42% at 12% 88%,  rgba(67,97,238,0.18)  0%, transparent 60%),
+    radial-gradient(ellipse 35% 35% at 52% 50%,  rgba(0,150,199,0.10)  0%, transparent 60%);
+  background-attachment: fixed;
+}
+
+/* All real content above bg */
+.header, .main { position: relative; z-index: 1; }
+
+/* ── Keyframes ── */
+@keyframes scanLine    { 0%{left:-80%} 100%{left:180%} }
+@keyframes titleShine  { 0%{background-position:-200% center} 100%{background-position:200% center} }
+@keyframes logoPulse   { 0%,100%{box-shadow:0 4px 18px rgba(0,201,167,0.5)} 50%{box-shadow:0 4px 28px rgba(67,97,238,0.65)} }
+@keyframes dotPing     { 0%{transform:scale(1);opacity:1} 70%{transform:scale(2.2);opacity:0} 100%{transform:scale(1);opacity:0} }
+@keyframes liquidFlow  { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes shimmer     { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes spin        { to{transform:rotate(360deg)} }
+@keyframes pulse       { 0%,100%{opacity:1} 50%{opacity:.4} }
+@keyframes blink       { 0%,100%{opacity:1} 50%{opacity:.2} }
+@keyframes wave        { 0%,100%{height:3px} 50%{height:16px} }
+@keyframes fadeUp      { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+@keyframes micPulse    {
+  0%  { box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 0 0 0   rgba(247,37,133,.5); }
+  70% { box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 0 0 18px rgba(247,37,133,0); }
+  100%{ box-shadow: 0 4px 16px rgba(0,0,0,0.12), 0 0 0 0   rgba(247,37,133,0); }
+}
+
+/* ══════════════════════════════════
+   HEADER — frosted white bar
+══════════════════════════════════ */
+.header {
+  position: relative; overflow: hidden;
+  padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.68);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  border-bottom: 1px solid rgba(255,255,255,0.90);
+  box-shadow: 0 2px 24px rgba(60,80,180,0.08), inset 0 -1px 0 rgba(0,0,0,0.04);
+}
+.header::after {
+  content:''; position:absolute; top:0; left:-80%;
+  width:55%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(67,97,238,0.05), transparent);
+  animation: scanLine 9s linear infinite;
+  pointer-events: none;
+}
+.header-left { display:flex; align-items:center; gap:13px; position:relative; z-index:1; }
+.logo {
+  width:44px; height:44px; border-radius:13px; flex-shrink:0;
+  background: linear-gradient(135deg,#00c9a7 0%,#4361ee 50%,#7209b7 100%);
+  display:flex; align-items:center; justify-content:center; font-size:20px;
+  border: 1.5px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 18px rgba(0,201,167,0.40), 0 1px 0 rgba(255,255,255,0.6) inset;
+  animation: logoPulse 3.5s ease infinite;
+}
+.header-title {
+  font-family:'Syne',sans-serif; font-size:18px; font-weight:800; letter-spacing:-.3px;
+  background: linear-gradient(90deg,#0f1432 0%,#4361ee 35%,#7209b7 65%,#0f1432 100%);
+  background-size: 220% auto;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: titleShine 5s linear infinite;
+}
+.header-sub {
+  font-size:11px; color:var(--t2); margin-top:2px;
+  display:flex; align-items:center; gap:6px; font-weight:500;
+}
+.live-indicator { position:relative; display:inline-flex; align-items:center; justify-content:center; width:8px; height:8px; }
+.live-indicator-dot { width:6px; height:6px; border-radius:50%; background:var(--teal); display:block; }
+.live-indicator-ring { position:absolute; inset:0; border-radius:50%; background:var(--teal); opacity:.5; animation:dotPing 1.8s ease-out infinite; }
+.live-text { color:var(--teal); font-weight:800; font-size:10px; letter-spacing:.8px; }
+.header-badge {
+  background: rgba(255,255,255,0.75);
+  color: var(--t2);
+  border: 1px solid rgba(255,255,255,0.95);
+  border-radius:30px; padding:5px 14px; font-size:11px; font-weight:700;
+  position:relative; z-index:1;
+  box-shadow: 0 2px 10px rgba(60,80,180,0.10);
+  white-space: nowrap;
+}
+
+/* ── Header right cluster ── */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Fine-tune trigger button */
+.ft-trigger-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.75);
+  color: var(--t1);
+  border: 1px solid rgba(67,97,238,0.28);
+  border-radius: 20px;
+  padding: 6px 13px;
+  font-size: 12px; font-weight: 700;
+  cursor: pointer;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 1px 6px rgba(60,80,180,0.08);
+  white-space: nowrap;
+}
+.ft-trigger-btn:hover { background: rgba(255,255,255,0.98); box-shadow: 0 3px 12px rgba(60,80,180,0.14); }
+.ft-pill {
+  background: linear-gradient(135deg, var(--blue), var(--violet));
+  color: #fff;
+  border-radius: 20px; padding: 1px 8px; font-size: 10px; font-weight: 800;
+}
+
+/* Fine-tune dropdown */
+.ft-dropdown {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.98);
+  border-radius: 16px;
+  padding: 14px;
+  min-width: 230px;
+  z-index: 300;
+  box-shadow: 0 12px 40px rgba(60,80,180,0.16), 0 2px 8px rgba(60,80,180,0.08);
+}
+.ft-dd-title {
+  font-size: 10px; font-weight: 800; color: var(--blue);
+  text-transform: uppercase; letter-spacing: 0.7px; margin-bottom: 6px;
+}
+.ft-dd-count {
+  font-size: 12.5px; color: var(--t2); margin-bottom: 11px; font-weight: 500;
+}
+.ft-dd-btns { display: flex; flex-direction: column; gap: 6px; }
+.ft-dd-btn {
+  width: 100%; padding: 9px 12px;
+  border-radius: 10px;
+  font-size: 12.5px; font-weight: 700; cursor: pointer; text-align: left;
+  font-family: 'DM Sans', system-ui, sans-serif; transition: all 0.15s;
+}
+.ft-dd-view   { background: rgba(67,97,238,0.07); color: var(--blue); border: 1px solid rgba(67,97,238,0.20); }
+.ft-dd-view:hover { background: rgba(67,97,238,0.14); }
+.ft-dd-export { background: linear-gradient(135deg,var(--teal),var(--blue)); color: #fff; border: none; box-shadow: 0 2px 10px rgba(0,201,167,0.25); }
+.ft-dd-export:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(67,97,238,0.35); }
+.ft-dd-clear  { background: rgba(247,37,133,0.07); color: var(--pink); border: 1px solid rgba(247,37,133,0.22); }
+.ft-dd-clear:hover { background: rgba(247,37,133,0.14); }
+
+/* ══════════════════════════════════
+   LAYOUT
+══════════════════════════════════ */
+.main { max-width:1100px; margin:0 auto; padding:28px 22px; }
+.grid { display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:20px; align-items:stretch; }
+
+/* ══════════════════════════════════
+   PANEL — light frosted glass recipe
+   Light source: top-left
+══════════════════════════════════ */
+.panel {
+  border-radius: var(--r);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  height: 100%;
+  /* alpha-gradient fill — proper glassmorphism, not flat opacity */
+  background:
+    linear-gradient(145deg,
+      rgba(255,255,255,0.85) 0%,
+      rgba(255,255,255,0.65) 45%,
+      rgba(255,255,255,0.50) 100%);
+  backdrop-filter: var(--blur);
+  -webkit-backdrop-filter: var(--blur);
+  /* clean white border with top-left rim brighter */
+  border: 1px solid rgba(255,255,255,0.90);
+  border-top-color: rgba(255,255,255,1);
+  border-left-color: rgba(255,255,255,1);
+  box-shadow: var(--shadow-card);
+}
+/* top-left specular highlight */
+.panel::before {
+  content:''; pointer-events:none; position:absolute; inset:0;
+  border-radius: var(--r);
+  background: linear-gradient(135deg,
+    rgba(255,255,255,0.55) 0%,
+    rgba(255,255,255,0.0)  50%);
+  z-index: 0;
+}
+
+.panel-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 13px 18px 11px;
+  border-bottom: 1px solid rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.30);
+  position: relative; z-index: 1;
+}
+.panel-title {
+  font-size:10.5px; font-weight:800; color:var(--t2);
+  text-transform:uppercase; letter-spacing:1px;
+  display:flex; align-items:center; gap:6px;
+}
+.panel-body { padding:17px; position:relative; z-index:1; flex:1; display:flex; flex-direction:column; }
+
+/* Per-panel: top accent stripe */
+.api-panel::after    { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--cyan)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
+.voice-panel::after  { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--blue),var(--violet)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
+.note-panel::after   { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--blue)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
+.result-panel::after { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--pink),var(--violet)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
+
+/* panel shadow colour per panel */
+.api-panel    { box-shadow: var(--shadow-card), 0 0 0 0 rgba(0,201,167,0); }
+.voice-panel  { box-shadow: var(--shadow-card), 0 0 0 0 rgba(67,97,238,0); }
+.note-panel   { box-shadow: var(--shadow-card); }
+.result-panel { box-shadow: var(--shadow-card); }
+
+/* ══════════════════════════════════
+   RESULT PANEL — empty + content
+══════════════════════════════════ */
+.result-empty {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  flex:1; padding:20px 16px; gap:10px; color:var(--t4);
+}
+.result-empty-icon { font-size:32px; opacity:0.45; }
+.result-empty-text { font-size:13px; text-align:center; line-height:1.65; color:var(--t3); }
+
+.result-content { display:none; flex-direction:column; gap:12px; flex:1; }
+.result-content.show { display:flex; }
+.result-content.fade-in { animation: fadeSlideIn .35s ease; }
+@keyframes fadeSlideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.result-box {
+  background:rgba(255,255,255,0.70);
+  border:1px solid rgba(255,255,255,0.90);
+  border-radius:12px; padding:14px 16px;
+  flex:1; min-height:80px;
+}
+.result-text {
+  font-size:13.5px; line-height:1.75;
+  color:var(--t1); white-space:pre-wrap;
+}
+
+.result-actions {
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+
+.copy-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:9px 16px; border-radius:10px; border:none; cursor:pointer;
+  font-size:12px; font-weight:800; font-family:'DM Sans',system-ui,sans-serif;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#fff;
+  box-shadow:0 3px 14px rgba(67,97,238,0.30), inset 0 1px 0 rgba(255,255,255,0.2);
+  transition:all .18s;
+}
+.copy-btn:hover  { transform:translateY(-1px); box-shadow:0 7px 22px rgba(67,97,238,0.40); }
+.copy-btn:active { transform:scale(.97); }
+.copy-btn.copied {
+  background:linear-gradient(135deg,var(--teal),var(--green));
+  box-shadow:0 3px 14px rgba(0,201,167,0.30);
+}
+
+.refine-btn, .new-note-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:9px 14px; border-radius:10px; cursor:pointer;
+  font-size:12px; font-weight:800; font-family:'DM Sans',system-ui,sans-serif;
+  background:rgba(255,255,255,0.70);
+  border:1px solid rgba(255,255,255,0.90);
+  color:var(--t2);
+  box-shadow:0 2px 8px rgba(60,80,180,0.08);
+  transition:all .18s;
+}
+.refine-btn:hover, .new-note-btn:hover {
+  background:rgba(255,255,255,0.92);
+  color:var(--blue);
+  transform:translateY(-1px);
+}
+.refine-btn:active, .new-note-btn:active { transform:scale(.97); }
+
+.error-box {
+  display:none; padding:11px 14px; border-radius:10px;
+  background:rgba(220,38,38,0.08); border:1px solid rgba(220,38,38,0.25);
+  color:#dc2626; font-size:12.5px; line-height:1.5;
+}
+
+.ready-badge {
+  display:none; align-items:center; gap:5px;
+  padding:3px 10px; border-radius:20px;
+  background:rgba(0,201,167,0.10); border:1px solid rgba(0,201,167,0.30);
+  font-size:10px; font-weight:800; color:var(--teal);
+}
+.ready-green-dot {
+  width:6px; height:6px; border-radius:50%; background:var(--teal);
+  box-shadow:0 0 5px rgba(0,201,167,0.55);
+}
+
+/* ══════════════════════════════════
+   NOTE PANEL — textarea + helpers
+══════════════════════════════════ */
+.note-textarea {
+  width:100%; flex:1; min-height:120px;
+  padding:12px 14px; border-radius:12px;
+  background:rgba(255,255,255,0.65);
+  border:1px solid rgba(255,255,255,0.9);
+  box-shadow:inset 0 2px 6px rgba(60,80,180,0.06);
+  font-size:13px; line-height:1.7; color:var(--t1);
+  font-family:'DM Sans',system-ui,sans-serif;
+  resize:vertical; outline:none; box-sizing:border-box;
+  transition:border-color .2s, box-shadow .2s;
+}
+.note-textarea::placeholder { color:var(--t4); }
+.note-textarea:focus {
+  border-color:rgba(67,97,238,0.40);
+  box-shadow:inset 0 2px 6px rgba(60,80,180,0.06), 0 0 0 3px rgba(67,97,238,0.10);
+}
+
+.char-badge {
+  font-size:10.5px; font-weight:700; color:var(--t3);
+  background:rgba(255,255,255,0.60); border:1px solid rgba(255,255,255,0.80);
+  padding:2px 9px; border-radius:20px;
+}
+
+.tamil-mode-badge {
+  display:none; margin-top:8px;
+  padding:7px 12px; border-radius:9px;
+  background:rgba(0,201,167,0.08); border:1px solid rgba(0,201,167,0.28);
+  font-size:11.5px; font-weight:700; color:var(--teal); line-height:1.4;
+}
+.tamil-mode-badge.show { display:block; }
+
+.live-bubble {
+  display:none; margin-top:8px; padding:8px 12px; border-radius:9px;
+  background:rgba(67,97,238,0.07); border-left:3px solid var(--blue);
+  font-size:12px; color:var(--t2); line-height:1.5;
+  align-items:center; gap:7px;
+}
+.live-bubble.show { display:flex; }
+.live-dot {
+  width:7px; height:7px; border-radius:50%; background:var(--blue); flex-shrink:0;
+  animation:livePulse 1s ease infinite;
+}
+@keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.clear-btn {
+  margin-top:9px; padding:7px 14px; border-radius:9px; cursor:pointer;
+  font-size:11.5px; font-weight:800; font-family:'DM Sans',system-ui,sans-serif;
+  background:rgba(255,255,255,0.60); border:1px solid rgba(247,37,133,0.25);
+  color:var(--pink); transition:all .18s; width:100%;
+}
+.clear-btn:hover {
+  background:rgba(247,37,133,0.07);
+  border-color:rgba(247,37,133,0.45);
+}
+
+/* ══════════════════════════════════
+   WAVEFORM + TRIGGER HINT + VOICE WARNING
+══════════════════════════════════ */
+.waveform {
+  display:flex; align-items:center; gap:3px;
+  height:22px; margin-top:8px;
+}
+.wave-bar {
+  width:3px; border-radius:3px;
+  background:linear-gradient(180deg,var(--blue),var(--violet));
+  opacity:0.5; height:8px; transition:height .15s;
+}
+.wave-bar.active { animation:waveBounce .6s ease infinite; opacity:1; }
+.wave-bar:nth-child(2) { animation-delay:.1s; }
+.wave-bar:nth-child(3) { animation-delay:.2s; }
+.wave-bar:nth-child(4) { animation-delay:.3s; }
+.wave-bar:nth-child(5) { animation-delay:.15s; }
+@keyframes waveBounce {
+  0%,100%{ height:5px }
+  50%    { height:18px }
+}
+
+.trigger-hint {
+  display:none; margin-top:7px;
+  padding:5px 10px; border-radius:8px;
+  background:rgba(67,97,238,0.07); border:1px solid rgba(67,97,238,0.20);
+  font-size:10.5px; font-weight:700; color:var(--blue);
+  animation:triggerPulse 2s ease infinite;
+}
+.trigger-hint.show { display:block; }
+@keyframes triggerPulse {
+  0%,100%{ opacity:1 } 50%{ opacity:0.6 }
+}
+
+.voice-warning {
+  display:none; margin-top:8px; padding:9px 12px;
+  border-radius:9px; font-size:12px; line-height:1.5;
+  background:rgba(220,38,38,0.07); border:1px solid rgba(220,38,38,0.22);
+  color:#dc2626;
+}
+.voice-warning.show { display:block; }
+
+/* ══════════════════════════════════
+   EQUAL HEIGHT PANELS — internal flex
+══════════════════════════════════ */
+/* API panel body — push copy-key-bar to bottom */
+.api-panel .panel-body { gap:0; justify-content:flex-start; }
+.copy-key-bar { margin-top:auto; padding-top:10px; }
+
+/* Voice panel body — mic-area takes remaining space */
+.voice-panel .panel-body { gap:0; }
+.mic-area { flex:1; }
+
+/* Note panel body — textarea grows */
+.note-panel .panel-body { gap:0; }
+.note-textarea { flex:1; }
+
+/* Result panel body — content/empty fills */
+.result-panel .panel-body { gap:0; }
+.result-empty { flex:1; }
+.result-content { flex:1; }
+.result-box { flex:1; }
+
+.api-panel.connected::after { background:linear-gradient(90deg,var(--teal),var(--green)); }
+.api-panel.connected .panel-header { background:rgba(0,201,167,0.06); }
+.api-panel.connected .panel-title  { color:var(--teal); }
+
+/* ══════════════════════════════════
+   RUN BUTTON
+══════════════════════════════════ */
+.run-btn {
+  width:100%; padding:18px; margin-bottom:22px;
+  color:#fff; border:none; border-radius:16px;
+  font-size:14px; font-weight:900; letter-spacing:1.4px; text-transform:uppercase;
+  font-family:'DM Sans',system-ui,sans-serif;
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  cursor:pointer; position:relative; overflow:hidden;
+  background: linear-gradient(270deg,#00c9a7,#4361ee,#7209b7,#f72585,#00c9a7);
+  background-size: 400% 400%;
+  animation: liquidFlow 4s ease infinite;
+  box-shadow: 0 4px 24px rgba(114,9,183,0.30), 0 1px 0 rgba(255,255,255,0.35) inset;
+  transition: transform .15s, box-shadow .15s;
+}
+.run-btn::before {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(105deg,transparent 38%,rgba(255,255,255,0.28) 50%,transparent 62%);
+  background-size:200% 100%; animation:shimmer 2.8s ease infinite; pointer-events:none;
+}
+.run-btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 10px 36px rgba(114,9,183,0.38), 0 1px 0 rgba(255,255,255,0.35) inset; }
+.run-btn:active:not(:disabled){ transform:translateY(1px); }
+.run-btn:disabled { opacity:.4; cursor:not-allowed; animation:none; background:#c8cfe8; box-shadow:none; color:white; }
+.spinner { width:17px; height:17px; border:2.5px solid rgba(255,255,255,0.35); border-top-color:#fff; border-radius:50%; animation:spin .75s linear infinite; }
+
+/* ══════════════════════════════════
+   API PANEL
+══════════════════════════════════ */
+.api-row { display:flex; gap:8px; align-items:center; margin-bottom:10px; }
+.api-input {
+  flex:1; padding:10px 14px;
+  font-size:13px; font-family:'DM Sans',system-ui,sans-serif;
+  border-radius:var(--r-sm);
+  background: var(--surface-inp);
+  border: 1px solid rgba(255,255,255,0.90);
+  border-top-color: rgba(255,255,255,1);
+  color: var(--t1); transition:all .2s;
+  box-shadow: 0 2px 8px rgba(60,80,180,0.07), inset 0 1px 2px rgba(0,0,0,0.04);
+}
+.api-input:focus {
+  outline:none;
+  border-color: rgba(0,201,167,0.60);
+  background: var(--surface-inp-fo);
+  box-shadow: 0 0 0 3px rgba(0,201,167,0.12), 0 2px 8px rgba(60,80,180,0.07);
+}
+.api-input::placeholder { color:var(--t3); }
+
+.connect-btn {
+  padding:10px 18px;
+  background: linear-gradient(135deg,var(--teal),var(--blue));
+  color:#fff; border:none; border-radius:var(--r-sm);
+  font-size:12.5px; font-weight:900; font-family:'DM Sans',system-ui,sans-serif;
+  cursor:pointer; transition:all .18s; white-space:nowrap;
+  box-shadow: 0 3px 14px rgba(0,201,167,0.32), inset 0 1px 0 rgba(255,255,255,0.3);
+}
+.connect-btn:hover  { transform:translateY(-2px); box-shadow:0 7px 22px rgba(0,201,167,0.42); }
+.connect-btn:active { transform:translateY(1px); }
+.connect-btn.connected-state { background:linear-gradient(135deg,var(--teal),var(--green)); }
+
+.api-hint { font-size:11.5px; color:var(--t2); line-height:1.5; font-weight:500; }
+.api-hint.success { color:var(--teal); font-weight:700; }
+
+/* Copy key bar */
+.copy-key-bar {
+  display:flex; align-items:center; gap:10px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.90);
+  border-radius:var(--r-sm); padding:9px 13px; margin-bottom:10px;
+  box-shadow: 0 2px 10px rgba(60,80,180,0.07);
+}
+.copy-key-label  { font-size:10.5px; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:.7px; white-space:nowrap; }
+.copy-key-masked { font-size:11.5px; font-family:monospace; color:var(--t2); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.copy-key-btn {
+  display:flex; align-items:center; gap:5px;
+  background: linear-gradient(135deg,var(--teal),var(--blue));
+  color:#fff; border:none; border-radius:var(--r-xs);
+  padding:6px 12px; font-size:11px; font-weight:900;
+  cursor:pointer; font-family:'DM Sans',system-ui,sans-serif;
+  white-space:nowrap; flex-shrink:0;
+  box-shadow:0 2px 10px rgba(0,201,167,0.28), inset 0 1px 0 rgba(255,255,255,0.3);
+  transition:all .15s;
+}
+.copy-key-btn:hover  { transform:translateY(-1px); box-shadow:0 5px 16px rgba(0,201,167,0.40); }
+.copy-key-btn:active { transform:translateY(1px); }
+.copy-key-btn.copied { background:linear-gradient(135deg,var(--green),var(--teal)); }
+
+/* Locked row */
+.api-locked-row {
+  display:none; align-items:center; justify-content:space-between; gap:10px;
+  margin-bottom:10px;
+  background: rgba(0,201,167,0.07);
+  border:1px solid rgba(0,201,167,0.30);
+  border-radius:var(--r-sm); padding:10px 13px;
+  box-shadow:0 2px 8px rgba(0,201,167,0.08);
+}
+.api-locked-row.show { display:flex; }
+.api-locked-key { font-size:12.5px; font-family:monospace; color:var(--teal); font-weight:700; letter-spacing:.8px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.api-edit-btn {
+  background:rgba(255,255,255,0.80); border:1px solid rgba(0,201,167,0.35);
+  border-radius:var(--r-xs); padding:6px 12px;
+  font-size:11.5px; font-weight:800; color:var(--teal);
+  cursor:pointer; font-family:'DM Sans',system-ui,sans-serif; transition:all .15s;
+  white-space:nowrap; flex-shrink:0;
+  box-shadow:0 1px 4px rgba(60,80,180,0.06);
+}
+.api-edit-btn:hover { background:rgba(0,201,167,0.10); }
+
+.status-dot { width:8px; height:8px; border-radius:50%; background:var(--t4); display:inline-block; transition:all .3s; }
+.status-dot.on { background:var(--teal); box-shadow:0 0 7px rgba(0,201,167,0.60); animation:pulse 2s infinite; }
+
+/* ══════════════════════════════════
+   VOICE PANEL
+══════════════════════════════════ */
+.jarvis-bar {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:10px; gap:10px;
+}
+.jarvis-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:6px 13px; border-radius:30px;
+  font-size:11.5px; font-weight:800;
+  transition:all .3s; border:1.5px solid;
+}
+.jarvis-off      { background:rgba(180,185,204,0.15); border-color:rgba(180,185,204,0.40); color:var(--t2); }
+.jarvis-listening{ background:rgba(114,9,183,0.10); border-color:rgba(114,9,183,0.40); color:var(--violet); animation:jarvisListen 1.8s ease infinite; }
+.jarvis-detected { background:rgba(0,201,167,0.12); border-color:rgba(0,201,167,0.45); color:var(--teal); }
+@keyframes jarvisListen {
+  0%,100%{ box-shadow:0 0 0 0 rgba(114,9,183,0); }
+  50%    { box-shadow:0 0 0 6px rgba(114,9,183,0.12); }
+}
+.jarvis-toggle-btn {
+  padding:5px 13px; border-radius:20px; border:1.5px solid rgba(180,185,204,0.40);
+  background:rgba(255,255,255,0.60); font-size:11px; font-weight:800;
+  color:var(--t2); cursor:pointer; transition:all .2s;
+}
+.jarvis-toggle-btn.active {
+  background:linear-gradient(135deg,var(--violet),var(--blue));
+  color:#fff; border-color:transparent;
+  box-shadow:0 3px 12px rgba(114,9,183,0.30);
+}
+.jarvis-tip {
+  font-size:10.5px; color:var(--t3); margin-bottom:10px;
+  padding:6px 10px; background:rgba(255,255,255,0.45);
+  border-radius:8px; border:1px solid rgba(255,255,255,0.7);
+  line-height:1.5;
+}
+.jarvis-tip strong { color:var(--violet); }
+
+.lang-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.lang-btn {
+  padding:5px 12px; border-radius:30px;
+  border:1px solid rgba(67,97,238,0.25);
+  background:rgba(255,255,255,0.65);
+  font-size:11px; font-weight:700; color:var(--t2);
+  cursor:pointer; transition:all .15s;
+  font-family:'DM Sans',system-ui,sans-serif;
+  box-shadow:0 1px 4px rgba(60,80,180,0.06);
+}
+.lang-btn:hover  { background:rgba(255,255,255,0.90); border-color:rgba(67,97,238,0.45); color:var(--blue); }
+.lang-btn:active { transform:scale(.97); }
+.lang-btn.active {
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#fff; border-color:transparent;
+  box-shadow:0 3px 12px rgba(67,97,238,0.35), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+.tamil-btn {
+  background:linear-gradient(135deg,var(--teal),var(--blue)) !important;
+  color:#fff !important; border-color:transparent !important; font-weight:900 !important;
+  box-shadow:0 3px 12px rgba(0,201,167,0.35) !important;
+}
+.tamil-btn.active { background:linear-gradient(135deg,var(--cyan),var(--violet)) !important; }
+
+.mic-area {
+  display:flex; align-items:center; gap:15px; padding:14px;
+  background:rgba(255,255,255,0.55);
+  border-radius:var(--r-sm);
+  border:1px solid rgba(255,255,255,0.90);
+  margin-bottom:11px;
+  box-shadow:0 2px 10px rgba(60,80,180,0.07), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+.mic-btn {
+  width:56px; height:56px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(145deg,var(--blue),var(--violet));
+  border:2px solid rgba(255,255,255,0.80);
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .18s;
+  box-shadow:0 4px 16px rgba(67,97,238,0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.mic-btn:hover  { transform:scale(1.07); box-shadow:0 7px 22px rgba(67,97,238,0.45); }
+.mic-btn:active { transform:scale(.95); }
+.mic-btn.recording {
+  background:linear-gradient(145deg,var(--pink),var(--violet));
+  border-color:rgba(255,255,255,0.70);
+  animation:micPulse 1.2s ease infinite;
+}
+.mic-info { flex:1; }
+.mic-status    { font-size:13.5px; font-weight:700; color:var(--t1); margin-bottom:2px; }
+
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div class="logo">🎙️</div>
+    <div>
+      <div class="header-title">CRM Note Agent</div>
+      <div class="header-sub">
+        <span class="live-indicator"><span class="live-indicator-ring"></span><span class="live-indicator-dot"></span></span>
+        <span class="live-text">LIVE</span>
+        <span style="color:rgba(255,255,255,0.25);">·</span>
+        Zoho CRM · Voice-to-Note · Tamil Nadu Edition
+      </div>
+    </div>
+  </div>
+  <div class="header-right">
+    <!-- Fine-tune dropdown trigger -->
+    <div style="position:relative;" id="ftDropdownWrap">
+      <button id="ftDropdownBtn" onclick="toggleFtDropdown()" class="ft-trigger-btn">
+        🧠 Fine-tune
+        <span id="ftCountPill" class="ft-pill">0</span>
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" id="ftChevron"><polyline points="6,9 12,15 18,9"/></svg>
+      </button>
+      <!-- Dropdown -->
+      <div id="ftDropdown" class="ft-dropdown" style="display:none;">
+        <div class="ft-dd-title">Training Dataset</div>
+        <div class="ft-dd-count" id="ftDropdownCount">No sessions saved yet</div>
+        <div class="ft-dd-btns">
+          <button id="dataViewBtn" onclick="openModal();toggleFtDropdown();" class="ft-dd-btn ft-dd-view">
+            📋 View All Sessions
+          </button>
+          <button id="dataExportBtn" class="ft-dd-btn ft-dd-export">
+            ⬇ Export JSONL for Fine-tuning
+          </button>
+          <button id="          <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
+            🗑 Clear All Data
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="header-badge">AI · Groq</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- 2×2 GRID -->
+  <div class="grid">
+
+    <!-- ── TOP LEFT: API KEY ── -->
+    <div class="panel api-panel" id="apiPanel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="apiPanelTitle">🔑 Groq API Key</span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <!-- Locked display (shown after connect) -->
+        <div class="api-locked-row" id="apiLockedRow">
+          <span class="api-locked-key" id="apiLockedDisplay">gsk_••••••••••••••••</span>
+          <button class="api-edit-btn" id="apiEditBtn">✏️ Edit</button>
+        </div>
+        <!-- Input row (shown when not connected) -->
+        <div class="api-row" id="apiInputRow">
+          <input type="password" class="api-input" id="apiKeyInput" placeholder="Paste your gsk_... Groq API key" autocomplete="off"/>
+          <button class="connect-btn" id="connectBtn">Connect</button>
+        </div>
+        <div class="api-hint" id="apiHint">
+          Get free key → <strong>console.groq.com</strong> → API Keys → Create Key
+        </div>
+        <!-- Quick-copy key bar -->
+        <div class="copy-key-bar">
+          <span class="copy-key-label">🔑 Your Key</span>
+          <span class="copy-key-masked" id="copyKeyMasked">gsk_FaSs••••••••••••••••i77h</span>
+          <button class="copy-key-btn" id="copyKeyBtn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy Key
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TOP RIGHT: VOICE INPUT ── -->
+    <div class="panel voice-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          Voice Input
+        </div>
+        <!-- ── JARVIS WAKEWORD BAR ── -->
+        <div class="jarvis-bar">
+          <div class="jarvis-badge jarvis-off" id="jarvisBadge">
+            <span id="jarvisDot">🔇</span>
+            <span id="jarvisLabel">Jarvis: OFF</span>
+          </div>
+          <button class="jarvis-toggle-btn" id="jarvisToggleBtn" onclick="toggleJarvis()">⚫ Enable Jarvis</button>
+        </div>
+        <div class="jarvis-tip">
+          Say <strong>"Hey Jarvis"</strong> to start recording · <strong>"Execute the Process"</strong> to run agent
+        </div>
+
+        <div class="lang-row">
+          <button class="lang-btn" data-lang="en-IN">🇮🇳 Indian</button>
+          <button class="lang-btn active" data-lang="en-US">🇺🇸 US</button>
+          <button class="lang-btn" data-lang="en-GB">🇬🇧 UK</button>
+          <button class="lang-btn tamil-btn" data-lang="ta-IN" data-mode="tamil">🌟 Tamil</button>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="mic-area">
+          <button class="mic-btn" id="micBtn">
+            <svg id="micIcon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+              <path d="M12 2a3 3 0 0 1 3 3v7a3 3 0 0 1-6 0V5a3 3 0 0 1 3-3z" fill="rgba(255,255,255,0.9)"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2" stroke-linecap="round"/>
+              <line x1="12" y1="19" x2="12" y2="23" stroke-linecap="round"/>
+              <line x1="8" y1="23" x2="16" y2="23" stroke-linecap="round"/>
+            </svg>
+            <svg id="stopIcon" width="18" height="18" viewBox="0 0 24 24" style="display:none;"><rect x="4" y="4" width="16" height="16" rx="2" fill="white"/></svg>
+          </button>
+          <div class="mic-info">
+            <div class="mic-status" id="micStatus">Click mic to start speaking</div>
+            <div class="mic-hint-text" id="micHint">Words will appear in the note box automatically</div>
+              <div class="trigger-hint" id="triggerHint">
+                Say <strong>"Execute the Process"</strong> to auto-run ⚡
+              </div>
+            <div class="waveform" id="waveform" style="display:none;">
+              <div class="wave-bar"></div><div class="wave-bar"></div>
+              <div class="wave-bar"></div><div class="wave-bar"></div>
+              <div class="wave-bar"></div><div class="wave-bar"></div>
+            </div>
+          </div>
+        </div>
+        <div class="voice-warning" id="voiceWarning"></div>
+      </div>
+    </div>
+
+    <!-- ── BOTTOM LEFT: RAW NOTE ── -->
+    <div class="panel note-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          Raw Note / Transcript
+        </div>
+        <span class="char-badge" id="charCount">0 chars</span>
+      </div>
+      <div class="panel-body">
+        <textarea class="note-textarea" id="noteInput" placeholder="Your voice will be transcribed here live...&#10;&#10;Or paste manually:&#10;Called Shiva today, 8th sem student, explained CI program, buffer slots only, quoted 60k with offer 45k, will confirm after family discuss..."></textarea>
+        <div class="tamil-mode-badge" id="tamilBadge">
+          🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English
+        </div>
+        <div class="live-bubble" id="liveBubble"><span class="live-dot"></span><span id="liveText"></span></div>
+        <button class="clear-btn" id="clearBtn">↺ Clear Note</button>
+      </div>
+    </div>
+
+    <!-- ── BOTTOM RIGHT: CRM RESULT ── -->
+    <div class="panel result-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,11 12,14 22,4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          CRM Output
+        </div>
+        <div id="readyBadge" style="display:none;" class="ready-badge"><div class="ready-green-dot"></div>Ready to Copy</div>
+      </div>
+      <div class="panel-body">
+        <!-- Empty state -->
+        <div class="result-empty" id="resultEmpty">
+          <div class="result-empty-icon">📋</div>
+          <div class="result-empty-text">Your CRM note will appear here<br>after you run the agent</div>
+        </div>
+        <!-- Result content -->
+        <div class="result-content" id="resultContent">
+          <div class="result-box">
+            <div class="result-text" id="resultText"></div>
+          </div>
+          <div class="result-actions">
+            <button class="copy-btn" id="copyBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy to Clipboard
+            </button>
+            <button class="refine-btn" id="refineBtn">✎ Refine</button>
+          </div>
+          <button class="new-note-btn" id="newNoteBtn">↺ New Note</button>
+        </div>
+        <!-- Error -->
+        <div class="error-box" id="errorBox" style="display:none;"></div>
+      </div>
+    </div>
+
+  </div><!-- end grid -->
+
+  <!-- RUN AGENT — full width BOTTOM -->
+  <button class="run-btn" id="runBtn" style="margin-top:20px;margin-bottom:0;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+    RUN AGENT — Convert to CRM Note
+  </button>
+
+</div><!-- end main -->
+
+<!-- DATA MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div class="modal-title">🧠 Fine-tune Training Data</div>
+      <button class="modal-close" id="modalClose">✕</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>// ── DOM refs (assigned inside DOMContentLoaded) ──
+let noteInput, apiKeyInput, runBtn, micBtn, connectBtn, copyBtn, refineBtn, newNoteBtn, clearBtn;
+
+// ── Voice recognition state ──
+let recognition   = null;
+let recognitionTA = null;
+let recognitionEN = null;
+let isRecording   = false;
+let triggerFired  = false;
+let lastInterim   = '';
+let restartTimer  = null;
+
+// ── Language / mode state ──
+let tamilMode   = false;
+
+// ── Wakeword state ──
+let wakeRecognition  = null;
+let wakeListening    = false;
+let wakeword_enabled = false;
+
+
+// ── SYSTEM PROMPT ──
+const SYSTEM_PROMPT = `You are a CRM note assistant for an edtech sales team based in Tamil Nadu, India.
+You convert raw voice notes — spoken in Indian English, Tamil-influenced English, or Tanglish — into clean, professional CRM paragraph entries for Zoho CRM.
+
+═══════════════════════════════════════
+OUTPUT RULES — follow every time
+═══════════════════════════════════════
+1. Output ONLY the CRM note. No labels, no headings, no preamble, no bullets.
+2. Always start with "Spoke with a prospect..."
+3. Third-person, past tense, casual-professional Indian edtech sales tone.
+4. Short calls → 3–5 sentences. Detailed calls → up to 8 sentences.
+5. Always include experience years when mentioned.
+6. If follow-up scheduled → include exact day and time slot.
+7. If webinar mentioned → state whether it was pushed or not.
+8. If price quoted → include it. Offer price → note it exists without revealing discount unless spoken.
+9. Gender → use he/she from what was spoken. Mixed/unclear → "the prospect".
+10. Preserve prices exactly as spoken: 24,000 / 24K / 85,000 / 70,000 / 25,000 / 34,500 plus GST where mentioned.
+11. Preserve course names exactly: Playwright, Selenium, REST API, Non-IT to IT Gateway, GenAI Foundation, Tool Developer, CI Program, AI with MCP.
+
+═══════════════════════════════════════
+SPOKEN LANGUAGE PATTERNS → CRM MEANING
+═══════════════════════════════════════
+"switch over his profiling"           → looking to upgrade / switch career
+"left his job past six months"        → not working for the past 6 months
+"will take up the batch on weekdays"  → likely to join the weekdays batch
+"checking out the details and confirm"→ will review and confirm
+"not revealed the real discounted price" → discount not disclosed, only regular price shared
+"insisted to attend the webinar"      → recommended attending the webinar
+"check company requirements whether AI allowing" → needs internal approval for AI upskilling
+"offer price which cannot get back"   → offer price, may not be available later
+"scheduled next call Monday 11 to 12" → follow-up call on Monday, 11:00–12:00 PM
+"webinar was not pushed"              → kept as-is: "Webinar was not pushed"
+"full payment comes around like 70"   → full-payment offer of around 70,000
+"combo pack"                          → combo pricing across courses
+"currently in a break"                → currently on a career break
+"pannitu confirm pannuven"            → will check and confirm
+"pathukalam / paakalam"               → let's see / will check
+"confirm pannuven"                    → will confirm
+
+═══════════════════════════════════════
+EXACT TRAINING EXAMPLES — match this style
+═══════════════════════════════════════
+
+RAW: "He was working as a manual and automation testers, so he wanted to switch over his profiling to next automation tool. I suggested him Playwright and explained about all the details and also insisted him to attend the webinar because the regular price comes around 24K plus GST. So I have not revealed the real discounted price. So he said he will be checking out the details and will confirm after the webinar."
+CRM: "Spoke with a prospect working in manual and automation testing, looking to upgrade to a next-gen automation tool. Suggested Playwright and explained the details. Recommended attending the webinar, mentioning the regular price of 24,000 plus GST without disclosing discounts. He said he will review and confirm after the webinar."
+
+RAW: "She was one year of experience working in banking-related sector. She wanted to switch over into IT. She was totally confused with development, banking-related, as well as IT testing-related things. I have suggested her a non-IT to IT gateway program. She said she will be checking out the details and confirm me by Monday."
+CRM: "Spoke with a prospect having 1 year of experience in the banking sector, confused about choosing between development, banking, and IT testing paths, and looking to switch into IT. Suggested the Non-IT to IT Gateway program. She said she will review the details and confirm by Monday."
+
+RAW: "He hold about four years of experience and he left his job past six months and he wanted to switch over again. So explain about the details regarding playwright and AI with MCP. He said he will be checking the webinar and he will confirm. The price quoted for him is about like 24,000 plus GST. He most probably will take up the batch on weekdays."
+CRM: "Spoke with a prospect having 4 years of experience, currently not working for the past 6 months and looking to switch back into IT. Explained Playwright with AI and MCP. Suggested attending the webinar. Quoted 24,000 plus GST. He is likely to opt for the weekdays batch and will confirm after the webinar."
+
+RAW: "Explain about all the details. She said she wanted to check with the company's requirements, whether the AI is allowing to proceed further. So I have informed her to register with that price amount because it's an offer price which cannot be able to get back. So that I have scheduled the next call on Monday, 11 to 12 p.m., so that he have to check with the requirements and all kind of things, so that he will be registered."
+CRM: "Spoke with a prospect and explained all program details. She wants to check her company's requirements to confirm whether AI upskilling is allowed. Informed her that the current price is an offer and may not be available later. Scheduled a follow-up call on Monday between 11:00 and 12:00 PM for final confirmation and possible registration."
+
+RAW: "See, he has 12 years of experience and wanted to learn Gen AI. I explained about all the details regarding that. And also the price was quoted for his about 85,000 and if we are doing full payment, it comes around like 70. And she said she will be checking all the details and confirm me. Webinar was not pushed."
+CRM: "Spoke with a prospect having 12 years of experience, interested in learning Generative AI. Explained the program details. Quoted 85,000, with a full-payment offer of around 70,000. Webinar was not pushed. She said she will review the details and confirm."
+
+RAW: "She was two years of experience and now currently in a break. She wanted to upskill herself in automation and want to move on to company. Explain about Selenium and REST API with job assistance. Selenium 20,000 and REST API 14,000. If you're taking as a combo pack, it will come around like 25 and for job assistance, it comes around like 34,500."
+CRM: "Spoke with a prospect having 2 years of experience and currently on a career break, looking to upskill in automation and re-join a company. Explained Selenium and REST API with job assistance. Quoted 20,000 for Selenium, 14,000 for REST API, 25,000 as a combo, and 34,500 with job assistance."
+
+Now convert the following raw voice note into a clean CRM paragraph using the exact style above:`;
+
+// ── STATE (global so all functions can access) ──
+let currentLang = 'en-US';
+let finalTranscript = '';
+let lastOutputText = '';
+
+document.addEventListener('DOMContentLoaded', function() {
+try {
+
+// ── DOM REFS (assigned on load) ──
+noteInput   = document.getElementById('noteInput');
+apiKeyInput = document.getElementById('apiKeyInput');
+runBtn      = document.getElementById('runBtn');
+micBtn      = document.getElementById('micBtn');
+connectBtn  = document.getElementById('connectBtn');
+copyBtn     = document.getElementById('copyBtn');
+refineBtn   = document.getElementById('refineBtn');
+newNoteBtn  = document.getElementById('newNoteBtn');
+clearBtn    = document.getElementById('clearBtn');
+
+// ── Wire up all event listeners here inside DCL ──
+connectBtn.addEventListener('click', () => {
+  const val = apiKeyInput.value.trim();
+  validateKey(val);
+  if (val) { try { sessionStorage.setItem('crm_groq_key', val); } catch(e2) {} }
+});
+apiKeyInput.addEventListener('input', () => validateKey(apiKeyInput.value));
+micBtn.addEventListener('click', () => { isRecording ? stopRecording() : startRecording(); });
+noteInput.addEventListener('input', updateCharCount);
+clearBtn.addEventListener('click', () => { noteInput.value=''; finalTranscript=''; updateCharCount(); document.getElementById('liveBubble').classList.remove('show'); });
+copyBtn.addEventListener('click', () => {
+  if (!lastOutputText) return;
+  if (navigator.clipboard && location.protocol !== 'file:') {
+    navigator.clipboard.writeText(lastOutputText).then(() => {
+      copyBtn.textContent = '✅ Copied!'; copyBtn.classList.add('copied');
+      setTimeout(() => { copyBtn.innerHTML = '📋 Copy to CRM'; copyBtn.classList.remove('copied'); }, 2000);
+    });
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = lastOutputText; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    copyBtn.textContent = '✅ Copied!'; copyBtn.classList.add('copied');
+    setTimeout(() => { copyBtn.innerHTML = '📋 Copy to CRM'; copyBtn.classList.remove('copied'); }, 2000);
+  }
+});
+refineBtn.addEventListener('click', () => {
+  if (!lastOutputText) return;
+  noteInput.value = lastOutputText; finalTranscript = lastOutputText;
+  document.getElementById('resultContent').classList.remove('show');
+  document.getElementById('resultEmpty').style.display = 'flex';
+  updateCharCount();
+});
+newNoteBtn.addEventListener('click', () => {
+  noteInput.value = ''; finalTranscript = ''; lastOutputText = '';
+  updateCharCount();
+  document.getElementById('resultContent').classList.remove('show');
+  document.getElementById('resultEmpty').style.display = 'flex';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('liveBubble').classList.remove('show');
+});
+runBtn.addEventListener('click', runAgentWithTamil);
+
+// ── INIT ──
+  // Restore saved key
+  try {
+    const saved = sessionStorage.getItem('crm_groq_key');
+    if (saved) { apiKeyInput.value = saved; validateKey(saved); }
+  } catch(e) {}
+
+  // Check speech support
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) showVoiceWarning('Voice input requires Chrome or Edge. Paste notes manually.');
+  if (location.protocol === 'file:') showVoiceWarning('<strong>Voice needs HTTPS.</strong> Publish to Netlify or run via localhost for mic to work.');
+
+  // Char count init
+  updateCharCount();
+
+// ── Additional event listeners ──
+(document.getElementById('apiEditBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+  unlockApiKey();
+  // Clear connected state so user must re-connect
+  document.getElementById('apiPanel').classList.remove('connected');
+  document.getElementById('apiPanelTitle').textContent = '🔑 Groq API Key';
+  document.getElementById('apiHint').innerHTML = 'Edit your key below and click Connect again';
+  document.getElementById('statusDot').classList.remove('on');
+  document.getElementById('connectBtn').textContent = 'Connect';
+  document.getElementById('connectBtn').classList.remove('connected-state');
+});
+
+(document.getElementById('copyKeyBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+  const btn = document.getElementById('copyKeyBtn');
+  const copy = (text) => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      return Promise.resolve();
+    }
+  };
+  copy(STORED_KEY).then(() => {
+    btn.innerHTML = '✅ Copied!';
+    btn.classList.add('copied');
+    // Also auto-paste into the API key input
+    document.getElementById('apiKeyInput').value = STORED_KEY;
+    validateKey(STORED_KEY);
+    try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(e) {}
+    setTimeout(() => {
+      btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Key';
+      btn.classList.remove('copied');
+    }, 2500);
+  }).catch(() => {
+    btn.textContent = 'Try manually';
+  });
+});
+
+(document.getElementById('dataViewBtn') || {addEventListener:()=>{}}).addEventListener('click', openModal);
+(document.getElementById('modalClose') || {addEventListener:()=>{}}).addEventListener('click', closeModal);
+(document.getElementById('modalOverlay') || {addEventListener:()=>{}}).addEventListener('click', (e) => { if (e.target === document.getElementById('modalOverlay')) closeModal(); });
+
+(document.getElementById('dataExportBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+  const records = getTrainingData();
+  if (records.length === 0) { alert('No data to export yet. Run the agent first.'); return; }
+  const jsonl = records.map(r => JSON.stringify(r.finetune)).join('\n');
+  const blob = new Blob([jsonl], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = 'crm-finetune-data-' + new Date().toISOString().slice(0,10) + '.jsonl';
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+(document.getElementById('dataClearBtn') || {addEventListener:()=>{}}).addEventListener('click', () => {
+  if (confirm('Clear all ' + getTrainingData().length + ' saved sessions? This cannot be undone.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    updateDataCount();
+  }
+});
+
+
+// ── LANGUAGE BUTTONS ──
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLang = btn.dataset.lang;
+    tamilMode = (btn.dataset.mode === 'tamil');
+    document.getElementById('tamilBadge').classList.toggle('show', tamilMode);
+    if (isRecording) { stopRecording(); setTimeout(startRecording, 300); }
+  });
+});
+
+} catch(initErr) { console.error('CRM Agent init error:', initErr); }
+
+});
+
+// ── API KEY ──
+function maskKey(val) {
+  // Show first 8 chars + dots + last 4
+  if (!val || val.length < 12) return val;
+  return val.slice(0, 8) + '••••••••••••' + val.slice(-4);
+}
+
+function lockApiKey(val) {
+  const lockedRow  = document.getElementById('apiLockedRow');
+  const inputRow   = document.getElementById('apiInputRow');
+  const lockedDisp = document.getElementById('apiLockedDisplay');
+  if (lockedRow && inputRow && lockedDisp) {
+    lockedDisp.textContent = maskKey(val);
+    lockedRow.classList.add('show');
+    inputRow.style.display = 'none';
+  }
+}
+
+function unlockApiKey() {
+  const lockedRow = document.getElementById('apiLockedRow');
+  const inputRow  = document.getElementById('apiInputRow');
+  if (lockedRow && inputRow) {
+    lockedRow.classList.remove('show');
+    inputRow.style.display = '';
+    document.getElementById('apiKeyInput').focus();
+  }
+}
+
+function validateKey(val) {
+  const panel  = document.getElementById('apiPanel');
+  const title  = document.getElementById('apiPanelTitle');
+  const hint   = document.getElementById('apiHint');
+  const dot    = document.getElementById('statusDot');
+  const btn    = document.getElementById('connectBtn');
+
+  if (val && val.startsWith('gsk_') && val.length > 20) {
+    panel.classList.add('connected');
+    title.textContent = '✅ API Key Connected';
+    hint.textContent  = 'Groq connected — ready to run!';
+    hint.className    = 'api-hint success';
+    dot.classList.add('on');
+    btn.textContent   = '✓ Connected';
+    btn.classList.add('connected-state');
+    lockApiKey(val);
+  } else {
+    panel.classList.remove('connected');
+    title.textContent = '🔑 Groq API Key';
+    hint.innerHTML    = 'Get free key → <strong>console.groq.com</strong> → API Keys → Create Key';
+    hint.className    = 'api-hint';
+    dot.classList.remove('on');
+    btn.textContent   = 'Connect';
+    btn.classList.remove('connected-state');
+    unlockApiKey();
+  }
+}
+
+// Edit button — unlock the key field// ── COPY KEY ──
+const STORED_KEY = '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';
+// ── LANGUAGE ──
+
+// ── MIC ──
+
+async function startRecording() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showVoiceWarning('Voice input requires Chrome or Edge.'); return; }
+
+  let permState = 'prompt';
+  try { const ps = await navigator.permissions.query({ name: 'microphone' }); permState = ps.state; } catch(e) {}
+
+  if (permState === 'denied') {
+    showVoiceWarning('<strong>Microphone blocked.</strong> Click 🔒 in address bar → Microphone → Allow → Refresh.');
+    return;
+  }
+
+  document.getElementById('micStatus').textContent = 'Waiting for permission...';
+  document.getElementById('micHint').textContent   = 'Click Allow in the browser popup ↑';
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    stream.getTracks().forEach(t => t.stop());
+  } catch(err) {
+    document.getElementById('micStatus').textContent = 'Click mic to start speaking';
+    document.getElementById('micHint').textContent   = 'Words will appear in the note box automatically';
+    document.getElementById('triggerHint').classList.remove('show');
+    if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+      showVoiceWarning('<strong>Mic blocked.</strong> Click 🔒 in address bar → Microphone → Allow → Refresh page.');
+    } else {
+      showVoiceWarning('Microphone error: ' + err.message);
+    }
+    return;
+  }
+
+  finalTranscript = noteInput.value.trim();
+  isRecording = true;
+  // Pause wake listener while main recording is active
+  if (wakeListening) stopWakeListener();
+  setMicUI(true);
+  createRecognition();
+}
+
+
+// ══════════════════════════════════════════════════
+  //  JARVIS WAKEWORD + EXECUTE TRIGGER SYSTEM
+  // ══════════════════════════════════════════════════
+
+  // ── Wake word variants (starts recording) ──
+  const WAKE_VARIANTS = [
+    'hey jarvis', 'hi jarvis', 'hey javis', 'hi javis',
+    'hey jarvas', 'hi jarvas', 'hey jarvi', 'hi jarvi',
+    'hey jarwis', 'hi jarwis', 'a jarvis', 'hey travis',
+    'hey service', 'hey servers', 'hey services',
+  ];
+
+  // ── Execute trigger variants (ends recording + runs agent) ──
+  const TRIGGER_PHRASE = 'execute the process';
+  const TRIGGER_VARIANTS = [
+    'execute the process',
+    'execute process',
+    'execute the processes',
+    'executed the process',
+    'execute this process',
+    'execute da process',
+    'execute de process',
+    'execute the processor',
+    'execute the progress',
+  ];
+
+  // ── Wakeword listener state ──
+
+  function normalise(txt) {
+    return txt.toLowerCase().replace(/[^a-z\s]/g,'').replace(/\s+/g,' ').trim();
+  }
+  function hasWake(txt)    { const n=normalise(txt); return WAKE_VARIANTS.some(v=>n.includes(v)); }
+  function hasTrigger(txt) { const n=normalise(txt); return TRIGGER_VARIANTS.some(v=>n.includes(v)); }
+
+  function stripPattern(txt, variants) {
+    let out = txt;
+    variants.forEach(v => {
+      const re = new RegExp(v.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+      out = out.replace(re,'');
+    });
+    return out.replace(/\s{2,}/g,' ').trim();
+  }
+
+  // ── UI helpers ──
+  function setWakeUI(state) {
+    // state: 'off' | 'listening' | 'detected'
+    const btn  = document.getElementById('jarvisBadge');
+    const dot  = document.getElementById('jarvisDot');
+    const lbl  = document.getElementById('jarvisLabel');
+    if (!btn) return;
+    btn.className = 'jarvis-badge jarvis-' + state;
+    if (state === 'off') {
+      dot.textContent = '🔇'; lbl.textContent = 'Jarvis: OFF';
+    } else if (state === 'listening') {
+      dot.textContent = '👂'; lbl.textContent = 'Jarvis: Listening…';
+    } else if (state === 'detected') {
+      dot.textContent = '⚡'; lbl.textContent = 'Jarvis: Activated!';
+    }
+  }
+
+  // ── Start background wakeword listener ──
+  function startWakeListener() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR || isRecording) return;
+    wakeListening = true;
+    setWakeUI('listening');
+
+    function spawnWake() {
+      if (!wakeListening || isRecording) return;
+      try {
+        wakeRecognition = new SR();
+        wakeRecognition.lang = currentLang;
+        wakeRecognition.continuous = false;
+        wakeRecognition.interimResults = true;
+        wakeRecognition.maxAlternatives = 3;
+
+        wakeRecognition.onresult = (e) => {
+          for (let i = e.resultIndex; i < e.results.length; i++) {
+            const alts = [];
+            for (let a = 0; a < e.results[i].length; a++) alts.push(e.results[i][a].transcript);
+            const detected = alts.some(a => hasWake(a));
+            if (detected) {
+              // Stop wake listener
+              wakeListening = false;
+              try { wakeRecognition.onend = null; wakeRecognition.stop(); } catch(ex){}
+              wakeRecognition = null;
+
+              // Flash badge
+              setWakeUI('detected');
+              showJarvisActivation();
+
+              // Small delay then start main recording
+              setTimeout(() => {
+                if (!isRecording) startRecording();
+              }, 600);
+              return;
+            }
+          }
+        };
+
+        wakeRecognition.onerror = (e) => {
+          if (['not-allowed','service-not-allowed'].includes(e.error)) {
+            wakeListening = false; setWakeUI('off'); wakeword_enabled = false;
+            updateJarvisBtn();
+            return;
+          }
+          // For network/no-speech errors just restart
+        };
+
+        wakeRecognition.onend = () => {
+          if (wakeListening && !isRecording) {
+            setTimeout(spawnWake, 300);
+          }
+        };
+
+        wakeRecognition.start();
+      } catch(ex) {
+        if (wakeListening) setTimeout(spawnWake, 600);
+      }
+    }
+    spawnWake();
+  }
+
+  // ── Stop background wakeword listener ──
+  function stopWakeListener() {
+    wakeListening = false;
+    if (wakeRecognition) {
+      try { wakeRecognition.onend = null; wakeRecognition.stop(); } catch(ex){}
+      wakeRecognition = null;
+    }
+    setWakeUI('off');
+  }
+
+  // ── Toggle Jarvis wakeword on/off ──
+  function toggleJarvis() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { showVoiceWarning('Voice wakeword requires Chrome or Edge on HTTPS.'); return; }
+    wakeword_enabled = !wakeword_enabled;
+    updateJarvisBtn();
+    if (wakeword_enabled) {
+      startWakeListener();
+    } else {
+      stopWakeListener();
+    }
+  }
+
+  function updateJarvisBtn() {
+    const btn = document.getElementById('jarvisToggleBtn');
+    if (!btn) return;
+    if (wakeword_enabled) {
+      btn.textContent = '🟢 Jarvis ON';
+      btn.classList.add('active');
+    } else {
+      btn.textContent = '⚫ Enable Jarvis';
+      btn.classList.remove('active');
+    }
+  }
+
+  // ── Jarvis activation animation ──
+  function showJarvisActivation() {
+    const lb = document.getElementById('liveBubble');
+    const liveText = document.getElementById('liveText');
+    lb.classList.add('show');
+    lb.style.borderLeftColor = '#7209b7';
+    lb.style.background = 'rgba(114,9,183,0.10)';
+    liveText.innerHTML = '🤖 <strong style="color:#7209b7">JARVIS ACTIVATED</strong> — Recording started…';
+    setTimeout(() => {
+      lb.style.borderLeftColor = '';
+      lb.style.background = '';
+    }, 2000);
+  }
+
+
+  function flashTriggerFeedback() {
+    const micBtn = document.getElementById('micBtn');
+    const lb = document.getElementById('liveBubble');
+    const liveText = document.getElementById('liveText');
+    // Show "EXECUTING..." flash in live bubble
+    lb.classList.add('show');
+    lb.style.borderLeftColor = '#4361ee';
+    lb.style.background = 'rgba(67,97,238,0.12)';
+    liveText.innerHTML = '⚡ <strong>EXECUTE THE PROCESS</strong> detected — running agent…';
+    // Pulse the mic button green briefly
+    micBtn.style.background = 'linear-gradient(145deg,#00c9a7,#06d6a0)';
+    setTimeout(() => {
+      micBtn.style.background = '';
+      lb.style.borderLeftColor = '';
+      lb.style.background = '';
+    }, 1800);
+  }
+
+function createRecognition() {
+  if (!isRecording) return;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.lang = currentLang;
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.maxAlternatives = 3;
+
+  recognition.onresult = (e) => {
+    let interim = '';
+    for (let i = e.resultIndex; i < e.results.length; i++) {
+      const alts = [];
+      for (let a = 0; a < e.results[i].length; a++) {
+        alts.push(e.results[i][a].transcript);
+      }
+      const primaryText = alts[0];
+
+      if (e.results[i].isFinal) {
+        const triggered = alts.some(alt => hasTrigger(alt));
+        if (triggered) {
+          const cleanChunk = stripPattern(primaryText, TRIGGER_VARIANTS);
+          if (cleanChunk) {
+            finalTranscript += (finalTranscript ? ' ' : '') + cleanChunk;
+          }
+          noteInput.value = finalTranscript;
+          updateCharCount();
+          isRecording = false;
+          if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+          if (recognition) {
+            recognition.onend = null;
+            recognition.onerror = null;
+            try { recognition.stop(); } catch(e2){}
+            recognition = null;
+          }
+          setMicUI(false);
+          flashTriggerFeedback();
+          setTimeout(() => {
+            document.getElementById('liveBubble').classList.remove('show');
+            runAgentWithTamil();
+            if (wakeword_enabled) setTimeout(() => { if (!wakeListening && !isRecording) startWakeListener(); }, 3500);
+          }, 900);
+          return;
+        }
+        finalTranscript += (finalTranscript ? ' ' : '') + primaryText.trim();
+      } else {
+        interim += primaryText;
+        if (hasTrigger(primaryText)) {
+          const cleanChunk = stripPattern(primaryText, TRIGGER_VARIANTS);
+          if (cleanChunk) {
+            finalTranscript += (finalTranscript ? ' ' : '') + cleanChunk;
+          }
+          noteInput.value = finalTranscript;
+          updateCharCount();
+          isRecording = false;
+          if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+          if (recognition) {
+            recognition.onend = null;
+            recognition.onerror = null;
+            try { recognition.stop(); } catch(e2){}
+            recognition = null;
+          }
+          setMicUI(false);
+          flashTriggerFeedback();
+          setTimeout(() => {
+            document.getElementById('liveBubble').classList.remove('show');
+            runAgentWithTamil();
+            if (wakeword_enabled) setTimeout(() => { if (!wakeListening && !isRecording) startWakeListener(); }, 3500);
+          }, 900);
+          return;
+        }
+      }
+    }
+    noteInput.value = finalTranscript + (interim ? ' ' + interim : '');
+    updateCharCount();
+    const lb = document.getElementById('liveBubble');
+    if (interim) {
+      lb.classList.add('show');
+      document.getElementById('liveText').textContent = '🎙️ ' + interim;
+    } else { lb.classList.remove('show'); }
+  };
+
+  recognition.onerror = (e) => {
+    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+      showVoiceWarning('Microphone blocked. Allow mic in browser settings and refresh.');
+      isRecording = false; setMicUI(false);
+    }
+  };
+
+  recognition.onend = () => {
+    document.getElementById('liveBubble').classList.remove('show');
+    if (isRecording) { restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 120); }
+  };
+
+  try { recognition.start(); } catch(e) {
+    restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 500);
+  }
+}
+function stopRecording() {
+  isRecording = false;
+  if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+  if (recognition) { recognition.onend = null; recognition.onerror = null; try { recognition.stop(); } catch(e){} recognition = null; }
+  setMicUI(false);
+  document.getElementById('liveBubble').classList.remove('show');
+  noteInput.value = noteInput.value.trim();
+  updateCharCount();
+  // Resume Jarvis wake listener if it was enabled
+  if (wakeword_enabled && !wakeListening) {
+    setTimeout(() => startWakeListener(), 800);
+  }
+  updateCharCount();
+}
+
+function setMicUI(on) {
+  const mi = document.getElementById('micIcon');
+  const si = document.getElementById('stopIcon');
+  if (on) {
+    micBtn.classList.add('recording');
+    mi.style.display = 'none'; si.style.display = 'block';
+    document.getElementById('micStatus').innerHTML = '<span style="color:#dc2626;font-weight:700;">● Recording...</span>';
+    document.getElementById('micHint').textContent = 'Tap mic again to stop';
+    document.getElementById('waveform').style.display = 'flex';
+    document.querySelectorAll('.wave-bar').forEach(b => b.classList.add('active'));
+    document.getElementById('triggerHint').classList.add('show');
+  } else {
+    micBtn.classList.remove('recording');
+    mi.style.display = 'block'; si.style.display = 'none';
+    document.getElementById('micStatus').textContent = 'Click mic to start speaking';
+    document.getElementById('micHint').textContent   = 'Words will appear in the note box automatically';
+    document.getElementById('waveform').style.display = 'none';
+    document.querySelectorAll('.wave-bar').forEach(b => b.classList.remove('active'));
+  }
+}
+
+function showVoiceWarning(msg) {
+  const w = document.getElementById('voiceWarning');
+  w.innerHTML = '⚠️ ' + msg;
+  w.classList.add('show');
+}
+
+// ── CHAR COUNT ──
+function updateCharCount() {
+  const l = noteInput.value.trim().length;
+  document.getElementById('charCount').textContent = l > 0 ? l + ' chars' : '0 chars';
+}
+
+// ── CLEAR ──
+
+// ── RUN AGENT ──
+// runAgent is called via runAgentWithTamil
+
+async function runAgent() {
+  if (isRecording) stopRecording();
+  const input  = noteInput.value.trim();
+  const apiKey = apiKeyInput.value.trim();
+
+  hideError();
+
+  if (!apiKey) {
+    showError('Please paste your Groq API key and click Connect first.');
+    return;
+  }
+  if (!input) {
+    noteInput.focus();
+    showError('Please add a note — speak using the mic or paste manually.');
+    return;
+  }
+
+  runBtn.disabled = true;
+  runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
+  hideResult();
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 2048,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: input }
+        ]
+      })
+    });
+
+    const data = await res.json();
+    if (data.error) {
+      showError('API Error: ' + data.error.message);
+    } else {
+      const text = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
+        ? data.choices[0].message.content.trim()
+        : 'Could not generate note. Please try again.';
+      showResult(text);
+      saveTrainingData(input, text, currentLang, tamilMode);
+    }
+  } catch(e) {
+    showError('Connection error: ' + e.message + '. Check your API key and internet.');
+  }
+
+  runBtn.disabled = false;
+  runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
+}
+
+// ── SHOW / HIDE RESULT ──
+function showResult(text) {
+  lastOutputText = text;
+  document.getElementById('resultEmpty').style.display   = 'none';
+  document.getElementById('resultContent').classList.add('show');
+  document.getElementById('resultText').textContent      = text;
+  document.getElementById('readyBadge').style.display    = 'inline-flex';
+  document.getElementById('errorBox').style.display      = 'none';
+  document.getElementById('resultContent').classList.add('fade-in');
+}
+
+function hideResult() {
+  document.getElementById('resultEmpty').style.display = 'flex';
+  document.getElementById('resultContent').classList.remove('show');
+  document.getElementById('readyBadge').style.display  = 'none';
+}
+
+function showError(msg) {
+  const eb = document.getElementById('errorBox');
+  eb.textContent = '⚠️ ' + msg;
+  eb.style.display = 'block';
+  document.getElementById('resultEmpty').style.display = 'none';
+}
+
+function hideError() {
+  document.getElementById('errorBox').style.display = 'none';
+}
+
+// ── COPY ──
+
+function fallbackCopy() {
+  const ta = document.createElement('textarea');
+  ta.value = lastOutputText;
+  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); showCopied(); } catch(e) { copyBtn.textContent = 'Select manually'; }
+  document.body.removeChild(ta);
+}
+
+function showCopied() {
+  copyBtn.classList.add('copied');
+  copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg> Copied!';
+  setTimeout(() => {
+    copyBtn.classList.remove('copied');
+    copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy to Clipboard';
+  }, 2500);
+}
+
+
+
+// ── TAMIL TRANSLATION via Groq ──
+async function translateTamilToEnglish(tamilText, apiKey) {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+    body: JSON.stringify({
+      model: 'llama-3.3-70b-versatile',
+      max_tokens: 2048,
+      messages: [
+        { role: 'system', content: 'You are a Tamil to English translator. The user is a sales person from Tamil Nadu speaking a mix of Tamil and Indian English (Tanglish). Translate their spoken note accurately to clear English. Preserve all numbers, names, prices, course names, and key facts exactly. Output ONLY the English translation — no explanation.' },
+        { role: 'user', content: tamilText }
+      ]
+    })
+  });
+  const data = await res.json();
+  return (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : tamilText;
+}
+
+// Override runAgent to handle Tamil mode translation first
+// We'll handle Tamil inline inside runAgent by wrapping the input
+async function runAgentWithTamil() {
+  if (isRecording) stopRecording();
+  let input  = noteInput.value.trim();
+  const apiKey = apiKeyInput.value.trim();
+
+  hideError();
+
+  if (!apiKey) { showError('Please paste your Groq API key and click Connect first.'); return; }
+  if (!input)  { noteInput.focus(); showError('Please add a note — speak using the mic or paste manually.'); return; }
+
+  runBtn.disabled = true;
+  runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
+  hideResult();
+
+  // TAMIL MODE: Translate first
+  let rawInput = input;
+  if (tamilMode) {
+    runBtn.innerHTML = '<div class="spinner"></div> 🌟 Translating Tamil → English...';
+    try {
+      input = await translateTamilToEnglish(input, apiKey);
+      // Show translated text in note box
+      noteInput.value = input;
+      updateCharCount();
+      document.getElementById('tamilBadge').innerHTML = '✅ Translated to English — Now converting to CRM note...';
+    } catch(e) {
+      showError('Translation error: ' + e.message);
+      runBtn.disabled = false;
+      runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
+      return;
+    }
+    runBtn.innerHTML = '<div class="spinner"></div> Converting to CRM Note...';
+  }
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        max_tokens: 2048,
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: input }
+        ]
+      })
+    });
+    const data = await res.json();
+    if (data.error) {
+      showError('API Error: ' + data.error.message);
+    } else {
+      const text = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
+        ? data.choices[0].message.content.trim()
+        : 'Could not generate note. Please try again.';
+      showResult(text);
+      saveTrainingData(rawInput, input, text, currentLang, tamilMode);
+      if (tamilMode) {
+        document.getElementById('tamilBadge').innerHTML = '🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English';
+      }
+    }
+  } catch(e) {
+    showError('Connection error: ' + e.message + '. Check your API key and internet.');
+  }
+
+  runBtn.disabled = false;
+  runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
+}
+
+
+// ── FINE-TUNE DATA STORAGE ──
+const STORAGE_KEY = 'crm_finetune_data';
+
+function saveTrainingData(rawInput, translatedInput, crmOutput, lang, wasTamil) {
+  let records = [];
+  try { records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) {}
+
+  const entry = {
+    id: Date.now(),
+    timestamp: new Date().toISOString(),
+    lang: lang,
+    tamil_mode: wasTamil,
+    raw_input: rawInput,
+    translated_input: wasTamil ? translatedInput : null,
+    crm_output: crmOutput,
+    // Fine-tune format (OpenAI/Groq compatible)
+    finetune: {
+      messages: [
+        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'user',   content: wasTamil ? translatedInput : rawInput },
+        { role: 'assistant', content: crmOutput }
+      ]
+    }
+  };
+
+  records.push(entry);
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    updateDataCount();
+  } catch(e) {
+    console.warn('Storage full — cannot save data:', e);
+  }
+}
+
+function getTrainingData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+}
+
+function updateDataCount() {
+  const records = getTrainingData();
+  const n = records.length;
+  const pill = document.getElementById('ftCountPill');
+  const ddCount = document.getElementById('ftDropdownCount');
+  if (pill) pill.textContent = n;
+  if (ddCount) ddCount.textContent = n > 0 ? n + ' session' + (n !== 1 ? 's' : '') + ' saved — ready to export' : 'No sessions saved yet';
+}
+
+// ── MODAL ──
+function openModal() {
+  const records = getTrainingData();
+  const body = document.getElementById('modalBody');
+  if (records.length === 0) {
+    body.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8;"><div style="font-size:40px;margin-bottom:12px;">🧠</div><div>No data saved yet. Run the agent to start building your fine-tune dataset.</div></div>';
+  } else {
+    body.innerHTML = records.slice().reverse().map((r, i) => {
+      const num = records.length - i;
+      const date = new Date(r.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+      const langTag = r.tamil_mode
+        ? '<span class="lang-tag tamil">🌟 Tamil</span>'
+        : '<span class="lang-tag">' + r.lang + '</span>';
+      return '<div class="data-entry">' +
+        '<div class="data-entry-header">' +
+          '<div class="data-entry-num">Session #' + num + langTag + '</div>' +
+          '<div class="data-entry-meta">' + date + '</div>' +
+        '</div>' +
+        '<div class="data-entry-body">' +
+          (r.tamil_mode && r.raw_input ? '<div class="data-field-label">Tamil Input (Raw)</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
+          (r.tamil_mode && r.translated_input ? '<div class="data-field-label">Translated to English</div><div class="data-field-value">' + escHtml(r.translated_input) + '</div>' : '') +
+          (!r.tamil_mode ? '<div class="data-field-label">Raw Voice Note</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
+          '<div class="data-field-label">CRM Output</div><div class="data-field-value" style="background:#eff6ff;border-left:3px solid #2563eb;">' + escHtml(r.crm_output) + '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
+
+
+
+function escHtml(t) {
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ── DROPDOWN TOGGLE ──
+function toggleFtDropdown() {
+  const dd = document.getElementById('ftDropdown');
+  const ch = document.getElementById('ftChevron');
+  const open = dd.style.display === 'block';
+  dd.style.display = open ? 'none' : 'block';
+  ch.style.transform = open ? '' : 'rotate(180deg)';
+}
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('ftDropdownWrap').contains(e.target)) {
+    document.getElementById('ftDropdown').style.display = 'none';
+    document.getElementById('ftChevron').style.transform = '';
+  }
+});
+
+</script>
+</body>
+</html>
