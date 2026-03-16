@@ -443,17 +443,9 @@ body {
   50%    { height:18px }
 }
 
-.trigger-hint {
-  display:none; margin-top:7px;
-  padding:5px 10px; border-radius:8px;
-  background:rgba(67,97,238,0.07); border:1px solid rgba(67,97,238,0.20);
-  font-size:10.5px; font-weight:700; color:var(--blue);
-  animation:triggerPulse 2s ease infinite;
-}
+
 .trigger-hint.show { display:block; }
-@keyframes triggerPulse {
-  0%,100%{ opacity:1 } 50%{ opacity:0.6 }
-}
+
 
 .voice-warning {
   display:none; margin-top:8px; padding:9px 12px;
@@ -832,10 +824,7 @@ body {
           <div class="mic-info">
             <div class="mic-status" id="micStatus">Click mic to start speaking</div>
             <div class="mic-hint-text" id="micHint">Words will appear in the note box automatically</div>
-              <div class="trigger-hint" id="triggerHint">
-                Say <strong>"Execute the Process"</strong> to auto-run ⚡
-              </div>
-            <div class="waveform" id="waveform" style="display:none;">
+              <div class="waveform" id="waveform" style="display:none;">
               <div class="wave-bar"></div><div class="wave-bar"></div>
               <div class="wave-bar"></div><div class="wave-bar"></div>
               <div class="wave-bar"></div><div class="wave-bar"></div>
@@ -928,9 +917,11 @@ let recognition   = null;
 let recognitionTA = null;
 let recognitionEN = null;
 let isRecording   = false;
-let triggerFired  = false;
 let lastInterim   = '';
 let restartTimer  = null;
+let lastOutputText = '';
+let finalTranscript = '';
+let currentLang  = 'en-IN';
 
 // ── Language / mode state ──
 let tamilMode   = false;
@@ -999,10 +990,6 @@ CRM: "Spoke with a prospect having 2 years of experience and currently on a care
 
 Now convert the following raw voice note into a clean CRM paragraph using the exact style above:`;
 
-// ── STATE (global so all functions can access) ──
-let currentLang = 'en-IN';
-let finalTranscript = '';
-let lastOutputText = '';
 
 document.addEventListener('DOMContentLoaded', function() {
 try {
@@ -1240,7 +1227,6 @@ async function startRecording() {
   } catch(err) {
     document.getElementById('micStatus').textContent = 'Click mic to start speaking';
     document.getElementById('micHint').textContent   = 'Words will appear in the note box automatically';
-    document.getElementById('triggerHint').classList.remove('show');
     if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
       showVoiceWarning('<strong>Mic blocked.</strong> Click 🔒 in address bar → Microphone → Allow → Refresh page.');
     } else {
@@ -1255,29 +1241,6 @@ async function startRecording() {
   createRecognition();
 }
 
-
-// ══════════════════════════════════════════════════
-  //  JARVIS WAKEWORD + EXECUTE TRIGGER SYSTEM
-  // ══════════════════════════════════════════════════
-
-  function flashTriggerFeedback() {
-    const micBtn = document.getElementById('micBtn');
-    const lb = document.getElementById('liveBubble');
-    const liveText = document.getElementById('liveText');
-    // Show "EXECUTING..." flash in live bubble
-    lb.classList.add('show');
-    lb.style.borderLeftColor = '#4361ee';
-    lb.style.background = 'rgba(67,97,238,0.12)';
-    liveText.innerHTML = '⚡ <strong>EXECUTE THE PROCESS</strong> detected — running agent…';
-    // Pulse the mic button green briefly
-    micBtn.style.background = 'linear-gradient(145deg,#00c9a7,#06d6a0)';
-    setTimeout(() => {
-      micBtn.style.background = '';
-      lb.style.borderLeftColor = '';
-      lb.style.background = '';
-    }, 1800);
-  }
-
 function createRecognition() {
   if (!isRecording) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -1285,68 +1248,16 @@ function createRecognition() {
   recognition.lang = currentLang;
   recognition.continuous = false;
   recognition.interimResults = true;
-  recognition.maxAlternatives = 3;
+  recognition.maxAlternatives = 1;
 
   recognition.onresult = (e) => {
     let interim = '';
     for (let i = e.resultIndex; i < e.results.length; i++) {
-      const alts = [];
-      for (let a = 0; a < e.results[i].length; a++) {
-        alts.push(e.results[i][a].transcript);
-      }
-      const primaryText = alts[0];
-
+      const primaryText = e.results[i][0].transcript;
       if (e.results[i].isFinal) {
-        const triggered = alts.some(alt => hasTrigger(alt));
-        if (triggered) {
-          const cleanChunk = stripPattern(primaryText, TRIGGER_VARIANTS);
-          if (cleanChunk) {
-            finalTranscript += (finalTranscript ? ' ' : '') + cleanChunk;
-          }
-          noteInput.value = finalTranscript;
-          updateCharCount();
-          isRecording = false;
-          if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
-          if (recognition) {
-            recognition.onend = null;
-            recognition.onerror = null;
-            try { recognition.stop(); } catch(e2){}
-            recognition = null;
-          }
-          setMicUI(false);
-          flashTriggerFeedback();
-          setTimeout(() => {
-            document.getElementById('liveBubble').classList.remove('show');
-            runAgentWithTamil();
-                }, 900);
-          return;
-        }
         finalTranscript += (finalTranscript ? ' ' : '') + primaryText.trim();
       } else {
         interim += primaryText;
-        if (hasTrigger(primaryText)) {
-          const cleanChunk = stripPattern(primaryText, TRIGGER_VARIANTS);
-          if (cleanChunk) {
-            finalTranscript += (finalTranscript ? ' ' : '') + cleanChunk;
-          }
-          noteInput.value = finalTranscript;
-          updateCharCount();
-          isRecording = false;
-          if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
-          if (recognition) {
-            recognition.onend = null;
-            recognition.onerror = null;
-            try { recognition.stop(); } catch(e2){}
-            recognition = null;
-          }
-          setMicUI(false);
-          flashTriggerFeedback();
-          setTimeout(() => {
-            document.getElementById('liveBubble').classList.remove('show');
-            runAgentWithTamil();
-                }, 900);
-          return;
-        }
       }
     }
     noteInput.value = finalTranscript + (interim ? ' ' + interim : '');
@@ -1355,11 +1266,13 @@ function createRecognition() {
     if (interim) {
       lb.classList.add('show');
       document.getElementById('liveText').textContent = '🎙️ ' + interim;
-    } else { lb.classList.remove('show'); }
+    } else {
+      lb.classList.remove('show');
+    }
   };
 
-  recognition.onerror = (e) => {
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+  recognition.onerror = (ev) => {
+    if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') {
       showVoiceWarning('Microphone blocked. Allow mic in browser settings and refresh.');
       isRecording = false; setMicUI(false);
     }
@@ -1367,21 +1280,27 @@ function createRecognition() {
 
   recognition.onend = () => {
     document.getElementById('liveBubble').classList.remove('show');
-    if (isRecording) { restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 120); }
+    if (isRecording) {
+      restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 120);
+    }
   };
 
-  try { recognition.start(); } catch(e) {
+  try { recognition.start(); } catch(ex) {
     restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 500);
   }
 }
+
 function stopRecording() {
   isRecording = false;
   if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
-  if (recognition) { recognition.onend = null; recognition.onerror = null; try { recognition.stop(); } catch(e){} recognition = null; }
+  if (recognition) {
+    recognition.onend = null; recognition.onerror = null;
+    try { recognition.stop(); } catch(ex) {}
+    recognition = null;
+  }
   setMicUI(false);
   document.getElementById('liveBubble').classList.remove('show');
   noteInput.value = noteInput.value.trim();
-  updateCharCount();
   updateCharCount();
 }
 
@@ -1395,7 +1314,6 @@ function setMicUI(on) {
     document.getElementById('micHint').textContent = 'Tap mic again to stop';
     document.getElementById('waveform').style.display = 'flex';
     document.querySelectorAll('.wave-bar').forEach(b => b.classList.add('active'));
-    document.getElementById('triggerHint').classList.add('show');
   } else {
     micBtn.classList.remove('recording');
     mi.style.display = 'block'; si.style.display = 'none';
@@ -1408,37 +1326,26 @@ function setMicUI(on) {
 
 function showVoiceWarning(msg) {
   const w = document.getElementById('voiceWarning');
+  if (!w) return;
   w.innerHTML = '⚠️ ' + msg;
   w.classList.add('show');
 }
 
-// ── CHAR COUNT ──
 function updateCharCount() {
   const l = noteInput.value.trim().length;
-  document.getElementById('charCount').textContent = l > 0 ? l + ' chars' : '0 chars';
+  const el = document.getElementById('charCount');
+  if (el) el.textContent = l > 0 ? l + ' chars' : '0 chars';
 }
 
-// ── CLEAR ──
 
 // ── RUN AGENT ──
-// runAgent is called via runAgentWithTamil
-
 async function runAgent() {
   if (isRecording) stopRecording();
   const input  = noteInput.value.trim();
   const apiKey = apiKeyInput.value.trim();
-
   hideError();
-
-  if (!apiKey) {
-    showError('Please paste your Groq API key and click Connect first.');
-    return;
-  }
-  if (!input) {
-    noteInput.focus();
-    showError('Please add a note — speak using the mic or paste manually.');
-    return;
-  }
+  if (!apiKey) { showError('Please paste your Groq API key and click Connect first.'); return; }
+  if (!input)  { noteInput.focus(); showError('Please add a note — speak using the mic or paste manually.'); return; }
 
   runBtn.disabled = true;
   runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
@@ -1447,33 +1354,84 @@ async function runAgent() {
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + apiKey
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 2048,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: input }
-        ]
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 2048,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: input }] })
     });
-
     const data = await res.json();
-    if (data.error) {
-      showError('API Error: ' + data.error.message);
-    } else {
-      const text = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
-        ? data.choices[0].message.content.trim()
-        : 'Could not generate note. Please try again.';
+    if (data.error) { showError('API Error: ' + data.error.message); }
+    else {
+      const text = (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : 'Could not generate note. Please try again.';
       showResult(text);
-      saveTrainingData(input, text, currentLang, tamilMode);
+      saveTrainingData(input, null, text, currentLang, false);
     }
-  } catch(e) {
-    showError('Connection error: ' + e.message + '. Check your API key and internet.');
+  } catch(ex) { showError('Connection error: ' + ex.message); }
+
+  runBtn.disabled = false;
+  runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
+}
+
+// ── TAMIL TRANSLATION ──
+async function translateTamilToEnglish(tamilText, apiKey) {
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 2048,
+      messages: [
+        { role: 'system', content: 'You are a Tamil to English translator. The user is a sales person from Tamil Nadu speaking a mix of Tamil and Indian English (Tanglish). Translate their spoken note accurately to clear English. Preserve all numbers, names, prices, course names, and key facts exactly. Output ONLY the English translation — no explanation.' },
+        { role: 'user', content: tamilText }
+      ] })
+  });
+  const data = await res.json();
+  return (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : tamilText;
+}
+
+// ── RUN AGENT WITH TAMIL MODE ──
+async function runAgentWithTamil() {
+  if (isRecording) stopRecording();
+  let input = noteInput.value.trim();
+  const apiKey = apiKeyInput.value.trim();
+  hideError();
+  if (!apiKey) { showError('Please paste your Groq API key and click Connect first.'); return; }
+  if (!input)  { noteInput.focus(); showError('Please add a note — speak using the mic or paste manually.'); return; }
+
+  runBtn.disabled = true;
+  runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
+  hideResult();
+
+  let rawInput = input;
+  if (tamilMode) {
+    runBtn.innerHTML = '<div class="spinner"></div> 🌟 Translating Tamil → English...';
+    try {
+      input = await translateTamilToEnglish(input, apiKey);
+      noteInput.value = input;
+      updateCharCount();
+      document.getElementById('tamilBadge').innerHTML = '✅ Translated to English — Now converting to CRM note...';
+    } catch(ex) {
+      showError('Translation error: ' + ex.message);
+      runBtn.disabled = false;
+      runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
+      return;
+    }
+    runBtn.innerHTML = '<div class="spinner"></div> Converting to CRM Note...';
   }
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 2048,
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, { role: 'user', content: input }] })
+    });
+    const data = await res.json();
+    if (data.error) { showError('API Error: ' + data.error.message); }
+    else {
+      const text = (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : 'Could not generate note. Please try again.';
+      showResult(text);
+      saveTrainingData(rawInput, tamilMode ? input : null, text, currentLang, tamilMode);
+      if (tamilMode) document.getElementById('tamilBadge').innerHTML = '🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English';
+    }
+  } catch(ex) { showError('Connection error: ' + ex.message); }
 
   runBtn.disabled = false;
   runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
@@ -1489,35 +1447,17 @@ function showResult(text) {
   document.getElementById('errorBox').style.display      = 'none';
   document.getElementById('resultContent').classList.add('fade-in');
 }
-
 function hideResult() {
   document.getElementById('resultEmpty').style.display = 'flex';
   document.getElementById('resultContent').classList.remove('show');
   document.getElementById('readyBadge').style.display  = 'none';
 }
-
 function showError(msg) {
   const eb = document.getElementById('errorBox');
-  eb.textContent = '⚠️ ' + msg;
-  eb.style.display = 'block';
+  eb.textContent = '⚠️ ' + msg; eb.style.display = 'block';
   document.getElementById('resultEmpty').style.display = 'none';
 }
-
-function hideError() {
-  document.getElementById('errorBox').style.display = 'none';
-}
-
-// ── COPY ──
-
-function fallbackCopy() {
-  const ta = document.createElement('textarea');
-  ta.value = lastOutputText;
-  ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0;';
-  document.body.appendChild(ta);
-  ta.focus(); ta.select();
-  try { document.execCommand('copy'); showCopied(); } catch(e) { copyBtn.textContent = 'Select manually'; }
-  document.body.removeChild(ta);
-}
+function hideError() { document.getElementById('errorBox').style.display = 'none'; }
 
 function showCopied() {
   copyBtn.classList.add('copied');
@@ -1528,137 +1468,31 @@ function showCopied() {
   }, 2500);
 }
 
-
-
-// ── TAMIL TRANSLATION via Groq ──
-async function translateTamilToEnglish(tamilText, apiKey) {
-  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      max_tokens: 2048,
-      messages: [
-        { role: 'system', content: 'You are a Tamil to English translator. The user is a sales person from Tamil Nadu speaking a mix of Tamil and Indian English (Tanglish). Translate their spoken note accurately to clear English. Preserve all numbers, names, prices, course names, and key facts exactly. Output ONLY the English translation — no explanation.' },
-        { role: 'user', content: tamilText }
-      ]
-    })
-  });
-  const data = await res.json();
-  return (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : tamilText;
-}
-
-// Override runAgent to handle Tamil mode translation first
-// We'll handle Tamil inline inside runAgent by wrapping the input
-async function runAgentWithTamil() {
-  if (isRecording) stopRecording();
-  let input  = noteInput.value.trim();
-  const apiKey = apiKeyInput.value.trim();
-
-  hideError();
-
-  if (!apiKey) { showError('Please paste your Groq API key and click Connect first.'); return; }
-  if (!input)  { noteInput.focus(); showError('Please add a note — speak using the mic or paste manually.'); return; }
-
-  runBtn.disabled = true;
-  runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
-  hideResult();
-
-  // TAMIL MODE: Translate first
-  let rawInput = input;
-  if (tamilMode) {
-    runBtn.innerHTML = '<div class="spinner"></div> 🌟 Translating Tamil → English...';
-    try {
-      input = await translateTamilToEnglish(input, apiKey);
-      // Show translated text in note box
-      noteInput.value = input;
-      updateCharCount();
-      document.getElementById('tamilBadge').innerHTML = '✅ Translated to English — Now converting to CRM note...';
-    } catch(e) {
-      showError('Translation error: ' + e.message);
-      runBtn.disabled = false;
-      runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
-      return;
-    }
-    runBtn.innerHTML = '<div class="spinner"></div> Converting to CRM Note...';
-  }
-
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        max_tokens: 2048,
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          { role: 'user', content: input }
-        ]
-      })
-    });
-    const data = await res.json();
-    if (data.error) {
-      showError('API Error: ' + data.error.message);
-    } else {
-      const text = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content)
-        ? data.choices[0].message.content.trim()
-        : 'Could not generate note. Please try again.';
-      showResult(text);
-      saveTrainingData(rawInput, input, text, currentLang, tamilMode);
-      if (tamilMode) {
-        document.getElementById('tamilBadge').innerHTML = '🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English';
-      }
-    }
-  } catch(e) {
-    showError('Connection error: ' + e.message + '. Check your API key and internet.');
-  }
-
-  runBtn.disabled = false;
-  runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
-}
-
-
-// ── FINE-TUNE DATA STORAGE ──
+// ── FINE-TUNE DATA ──
 const STORAGE_KEY = 'crm_finetune_data';
 
 function saveTrainingData(rawInput, translatedInput, crmOutput, lang, wasTamil) {
   let records = [];
-  try { records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) {}
-
+  try { records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(ex) {}
   const entry = {
-    id: Date.now(),
-    timestamp: new Date().toISOString(),
-    lang: lang,
-    tamil_mode: wasTamil,
-    raw_input: rawInput,
-    translated_input: wasTamil ? translatedInput : null,
-    crm_output: crmOutput,
-    // Fine-tune format (OpenAI/Groq compatible)
-    finetune: {
-      messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
-        { role: 'user',   content: wasTamil ? translatedInput : rawInput },
-        { role: 'assistant', content: crmOutput }
-      ]
-    }
+    id: Date.now(), timestamp: new Date().toISOString(), lang, tamil_mode: wasTamil,
+    raw_input: rawInput, translated_input: wasTamil ? translatedInput : null, crm_output: crmOutput,
+    finetune: { messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user',   content: wasTamil ? translatedInput : rawInput },
+      { role: 'assistant', content: crmOutput }
+    ]}
   };
-
   records.push(entry);
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
-    updateDataCount();
-  } catch(e) {
-    console.warn('Storage full — cannot save data:', e);
-  }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); updateDataCount(); } catch(ex) {}
 }
 
 function getTrainingData() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(ex) { return []; }
 }
 
 function updateDataCount() {
-  const records = getTrainingData();
-  const n = records.length;
+  const n = getTrainingData().length;
   const pill = document.getElementById('ftCountPill');
   const ddCount = document.getElementById('ftDropdownCount');
   if (pill) pill.textContent = n;
@@ -1675,37 +1509,28 @@ function openModal() {
     body.innerHTML = records.slice().reverse().map((r, i) => {
       const num = records.length - i;
       const date = new Date(r.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
-      const langTag = r.tamil_mode
-        ? '<span class="lang-tag tamil">🌟 Tamil</span>'
-        : '<span class="lang-tag">' + r.lang + '</span>';
+      const langTag = r.tamil_mode ? '<span class="lang-tag tamil">🌟 Tamil</span>' : '<span class="lang-tag">' + r.lang + '</span>';
       return '<div class="data-entry">' +
-        '<div class="data-entry-header">' +
-          '<div class="data-entry-num">Session #' + num + langTag + '</div>' +
-          '<div class="data-entry-meta">' + date + '</div>' +
-        '</div>' +
+        '<div class="data-entry-header"><div class="data-entry-num">Session #' + num + langTag + '</div><div class="data-entry-meta">' + date + '</div></div>' +
         '<div class="data-entry-body">' +
-          (r.tamil_mode && r.raw_input ? '<div class="data-field-label">Tamil Input (Raw)</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
-          (r.tamil_mode && r.translated_input ? '<div class="data-field-label">Translated to English</div><div class="data-field-value">' + escHtml(r.translated_input) + '</div>' : '') +
-          (!r.tamil_mode ? '<div class="data-field-label">Raw Voice Note</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
+          (r.tamil_mode && r.raw_input ? '<div class="data-field-label">Tamil Input</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
+          (r.tamil_mode && r.translated_input ? '<div class="data-field-label">Translated</div><div class="data-field-value">' + escHtml(r.translated_input) + '</div>' : '') +
+          (!r.tamil_mode ? '<div class="data-field-label">Raw Note</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
           '<div class="data-field-label">CRM Output</div><div class="data-field-value" style="background:#eff6ff;border-left:3px solid #2563eb;">' + escHtml(r.crm_output) + '</div>' +
-        '</div>' +
-      '</div>';
+        '</div></div>';
     }).join('');
   }
   document.getElementById('modalOverlay').classList.add('show');
 }
-
 function closeModal() { document.getElementById('modalOverlay').classList.remove('show'); }
-
-
 
 function escHtml(t) {
   return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 // ── DROPDOWN TOGGLE ──
-function toggleFtDropdown(e) {
-  if (e) e.stopPropagation();
+function toggleFtDropdown(ev) {
+  if (ev) ev.stopPropagation();
   const dd = document.getElementById('ftDropdown');
   const ch = document.getElementById('ftChevron');
   const open = dd.style.display === 'block';
@@ -1713,13 +1538,11 @@ function toggleFtDropdown(e) {
   ch.style.transform = open ? '' : 'rotate(180deg)';
 }
 // Close dropdown when clicking outside
-document.addEventListener('click', (e) => {
-  if (!document.getElementById('ftDropdownWrap').contains(e.target)) {
+document.addEventListener('click', (ev) => {
+  const wrap = document.getElementById('ftDropdownWrap');
+  if (wrap && !wrap.contains(ev.target)) {
     document.getElementById('ftDropdown').style.display = 'none';
     document.getElementById('ftChevron').style.transform = '';
   }
 });
 
-</script>
-</body>
-</html>
