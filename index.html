@@ -629,7 +629,7 @@ body {
 }
 .jarvis-tip strong { color:var(--violet); }
 
-.lang-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+.lang-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; justify-content:center; }
 .lang-btn {
   padding:5px 12px; border-radius:30px;
   border:1px solid rgba(67,97,238,0.25);
@@ -712,6 +712,23 @@ body {
   .panel-body { padding: 10px; }
   .run-btn { font-size: 11px; padding: 12px; }
 }
+
+.trigger-hint {
+  text-align:center; margin-top:8px;
+  padding:5px 12px; border-radius:8px;
+  background:rgba(67,97,238,0.07); border:1px solid rgba(67,97,238,0.20);
+  font-size:10.5px; font-weight:700; color:var(--blue);
+  display:none;
+}
+.trigger-hint.show { display:block; animation:triggerPulse 2s ease infinite; }
+@keyframes triggerPulse { 0%,100%{opacity:1} 50%{opacity:0.55} }
+.trigger-detected {
+  display:none; text-align:center; margin-top:8px;
+  padding:6px 12px; border-radius:8px;
+  background:rgba(0,201,167,0.10); border:1px solid rgba(0,201,167,0.35);
+  font-size:11px; font-weight:800; color:var(--teal);
+}
+.trigger-detected.show { display:block; }
 </style>
 </head>
 <body>
@@ -807,7 +824,6 @@ body {
         </div>
                 <div class="lang-row">
           <button class="lang-btn active" data-lang="en-IN" data-mode="english">🇮🇳 English</button>
-          <button class="lang-btn tamil-btn" data-lang="ta-IN" data-mode="tamil">🌟 Tamil</button>
         </div>
       </div>
       <div class="panel-body">
@@ -829,6 +845,8 @@ body {
               <div class="wave-bar"></div><div class="wave-bar"></div>
               <div class="wave-bar"></div><div class="wave-bar"></div>
             </div>
+            <div class="trigger-hint" id="triggerHint">⚡ Say "EXECUTE THE PROCESS" to auto-run</div>
+            <div class="trigger-detected" id="triggerDetected">⚡ EXECUTING...</div>
           </div>
         </div>
         <div class="voice-warning" id="voiceWarning"></div>
@@ -846,9 +864,7 @@ body {
       </div>
       <div class="panel-body">
         <textarea class="note-textarea" id="noteInput" placeholder="Your voice will be transcribed here live...&#10;&#10;Or paste manually:&#10;Called Shiva today, 8th sem student, explained CI program, buffer slots only, quoted 60k with offer 45k, will confirm after family discuss..."></textarea>
-        <div class="tamil-mode-badge" id="tamilBadge">
-          🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English
-        </div>
+        
         <div class="live-bubble" id="liveBubble"><span class="live-dot"></span><span id="liveText"></span></div>
         <button class="clear-btn" id="clearBtn">↺ Clear Note</button>
       </div>
@@ -902,14 +918,11 @@ body {
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-header" style="justify-content:flex-end;padding:8px 14px 0;">
-      <button class="modal-close" id="modalClose" style="display:none;"></button>
-    </div>
-    <div class="modal-body" id="modalBody"></div>
-  </div>
-</div>
+    <div class="modal-header" style="
 
-<script>// ── DOM refs (assigned inside DOMContentLoaded) ──
+<script>
+// ─
+// ── DOM refs (assigned inside DOMContentLoaded) ──
 let noteInput, apiKeyInput, runBtn, micBtn, connectBtn, copyBtn, refineBtn, newNoteBtn, clearBtn;
 
 // ── Voice recognition state ──
@@ -924,7 +937,6 @@ let finalTranscript = '';
 let currentLang  = 'en-IN';
 
 // ── Language / mode state ──
-let tamilMode   = false;
 
 
 // ── SYSTEM PROMPT ──
@@ -1047,10 +1059,15 @@ newNoteBtn.addEventListener('click', () => {
 runBtn.addEventListener('click', runAgentWithTamil);
 
 // ── INIT ──
-  // Restore saved key
+  // Restore saved key — also auto-load STORED_KEY on first visit
   try {
     const saved = sessionStorage.getItem('crm_groq_key');
-    if (saved) { apiKeyInput.value = saved; validateKey(saved); }
+    if (saved && saved.startsWith('gsk_') && saved.length > 20) {
+      apiKeyInput.value = saved; validateKey(saved);
+    } else if (STORED_KEY) {
+      apiKeyInput.value = STORED_KEY; validateKey(STORED_KEY);
+      try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(ex) {}
+    }
   } catch(e) {}
 
   // Check speech support
@@ -1097,31 +1114,25 @@ document.getElementById('apiEditBtn').addEventListener('click', () => {
 
 document.getElementById('copyKeyBtn').addEventListener('click', () => {
   const btn = document.getElementById('copyKeyBtn');
-  const copy = (text) => {
+  // Instantly paste key into the input field and activate
+  const input = document.getElementById('apiKeyInput');
+  input.value = STORED_KEY;
+  validateKey(STORED_KEY);
+  try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(ex) {}
+  // Visual feedback
+  const origHTML = btn.innerHTML;
+  btn.innerHTML = '✅ Connected!';
+  btn.classList.add('copied');
+  setTimeout(() => {
+    btn.innerHTML = origHTML;
+    btn.classList.remove('copied');
+  }, 2500);
+  // Also copy to clipboard silently (best-effort)
+  try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-      document.body.appendChild(ta); ta.select();
-      document.execCommand('copy'); document.body.removeChild(ta);
-      return Promise.resolve();
+      navigator.clipboard.writeText(STORED_KEY).catch(() => {});
     }
-  };
-  copy(STORED_KEY).then(() => {
-    btn.innerHTML = '✅ Copied!';
-    btn.classList.add('copied');
-    // Also auto-paste into the API key input
-    document.getElementById('apiKeyInput').value = STORED_KEY;
-    validateKey(STORED_KEY);
-    try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(e) {}
-    setTimeout(() => {
-      btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Key';
-      btn.classList.remove('copied');
-    }, 2500);
-  }).catch(() => {
-    btn.textContent = 'Try manually';
-  });
+  } catch(ex) {}
 });
 
 document.getElementById('dataViewBtn').addEventListener('click', openModal);
@@ -1155,8 +1166,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     currentLang = btn.dataset.lang;
-    tamilMode = (btn.dataset.mode === 'tamil');
-    document.getElementById('tamilBadge').classList.toggle('show', tamilMode);
     if (isRecording) { stopRecording(); setTimeout(startRecording, 300); }
   });
 });
@@ -1220,7 +1229,7 @@ function validateKey(val) {
 }
 
 // Edit button — unlock the key field// ── COPY KEY ──
-const STORED_KEY = ''; // Paste your key above and click Connect
+const STORED_KEY = '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';
 // ── LANGUAGE ──
 
 // ── MIC ──
@@ -1249,13 +1258,95 @@ async function startRecording() {
   createRecognition();
 }
 
+// ══════════════════════════════════════════════════
+// EXECUTE THE PROCESS — Voice Trigger Engine
+// Detects the exact phrase in live speech and auto-runs
+// ══════════════════════════════════════════════════
+
+const TRIGGER_PHRASE    = 'execute the process';
+const TRIGGER_VARIANTS  = [
+  'execute the process',
+  'execute the processes',
+  'executed the process',
+  'execute this process',
+  'execute the processor',
+  'execute the progress',
+  'execute the process is',
+  'execute da process',
+  'execute de process',
+];
+
+function normaliseSpeech(txt) {
+  return txt.toLowerCase()
+    .replace(/[^a-z\s]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function hasTriggerPhrase(txt) {
+  const n = normaliseSpeech(txt);
+  return TRIGGER_VARIANTS.some(v => n.includes(v));
+}
+
+function stripTrigger(txt) {
+  let out = txt;
+  TRIGGER_VARIANTS.forEach(v => {
+    const re = new RegExp(v.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+    out = out.replace(re, '');
+  });
+  return out.replace(/\s{2,}/g, ' ').trim();
+}
+
+let triggerFired = false;
+
+function checkTrigger(text) {
+  if (!isRecording || triggerFired) return false;
+  if (!hasTriggerPhrase(text)) return false;
+
+  triggerFired = true;
+
+  // Strip trigger phrase from accumulated transcript
+  const cleanText = stripTrigger(text);
+  if (cleanText && !finalTranscript.endsWith(cleanText)) {
+    finalTranscript += (finalTranscript ? ' ' : '') + cleanText;
+  }
+  noteInput.value = finalTranscript.trim();
+  updateCharCount();
+
+  // Show detected flash
+  const td = document.getElementById('triggerDetected');
+  if (td) td.classList.add('show');
+  const lb = document.getElementById('liveBubble');
+  lb.classList.add('show');
+  document.getElementById('liveText').innerHTML = '⚡ <strong>EXECUTE THE PROCESS</strong> — Running agent...';
+
+  // Stop recording cleanly
+  isRecording = false;
+  if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+  if (recognition) {
+    recognition.onend   = null;
+    recognition.onerror = null;
+    try { recognition.stop(); } catch(ex) {}
+    recognition = null;
+  }
+  setMicUI(false);
+
+  // Run agent after short flash
+  setTimeout(() => {
+    lb.classList.remove('show');
+    triggerFired = false;
+    runAgentWithTamil();
+  }, 800);
+
+  return true;
+}
+
+
 function createRecognition() {
   if (!isRecording) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
-  // For Tamil mode use en-IN — handles Tanglish better than ta-IN
-  // The AI translation step converts it to English regardless
-  recognition.lang = tamilMode ? 'en-IN' : currentLang;
+  recognition.lang = currentLang;
   recognition.continuous = false;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
@@ -1265,9 +1356,13 @@ function createRecognition() {
     for (let i = e.resultIndex; i < e.results.length; i++) {
       const primaryText = e.results[i][0].transcript;
       if (e.results[i].isFinal) {
+        // Check final result for trigger
+        if (checkTrigger(primaryText)) return;
         finalTranscript += (finalTranscript ? ' ' : '') + primaryText.trim();
       } else {
         interim += primaryText;
+        // Check interim for trigger (fastest response)
+        if (checkTrigger(interim)) return;
       }
     }
     noteInput.value = finalTranscript + (interim ? ' ' + interim : '');
@@ -1312,6 +1407,7 @@ function createRecognition() {
 
 function stopRecording() {
   isRecording = false;
+  triggerFired = false;
   if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
   if (recognition) {
     recognition.onend = null; recognition.onerror = null;
@@ -1334,6 +1430,8 @@ function setMicUI(on) {
     document.getElementById('micHint').textContent = 'Tap mic again to stop';
     document.getElementById('waveform').style.display = 'flex';
     document.querySelectorAll('.wave-bar').forEach(b => b.classList.add('active'));
+    const th = document.getElementById('triggerHint');
+    if (th) th.classList.add('show');
   } else {
     micBtn.classList.remove('recording');
     mi.style.display = 'block'; si.style.display = 'none';
@@ -1341,6 +1439,10 @@ function setMicUI(on) {
     document.getElementById('micHint').textContent   = 'Words will appear in the note box automatically';
     document.getElementById('waveform').style.display = 'none';
     document.querySelectorAll('.wave-bar').forEach(b => b.classList.remove('active'));
+    const th2 = document.getElementById('triggerHint');
+    if (th2) th2.classList.remove('show');
+    const td = document.getElementById('triggerDetected');
+    if (td) td.classList.remove('show');
   }
 }
 
@@ -1391,21 +1493,6 @@ async function runAgent() {
   runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
 }
 
-// ── TAMIL TRANSLATION ──
-async function translateTamilToEnglish(tamilText, apiKey) {
-  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + apiKey },
-    body: JSON.stringify({ model: 'llama-3.3-70b-versatile', max_tokens: 2048,
-      messages: [
-        { role: 'system', content: 'You are a Tamil to English translator. The user is a sales person from Tamil Nadu speaking a mix of Tamil and Indian English (Tanglish). Translate their spoken note accurately to clear English. Preserve all numbers, names, prices, course names, and key facts exactly. Output ONLY the English translation — no explanation.' },
-        { role: 'user', content: tamilText }
-      ] })
-  });
-  const data = await res.json();
-  return (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : tamilText;
-}
-
 // ── RUN AGENT WITH TAMIL MODE ──
 async function runAgentWithTamil() {
   if (isRecording) stopRecording();
@@ -1419,22 +1506,7 @@ async function runAgentWithTamil() {
   runBtn.innerHTML = '<div class="spinner"></div> Processing Note...';
   hideResult();
 
-  let rawInput = input;
-  if (tamilMode) {
-    runBtn.innerHTML = '<div class="spinner"></div> 🌟 Translating Tamil → English...';
-    try {
-      input = await translateTamilToEnglish(input, apiKey);
-      noteInput.value = input;
-      updateCharCount();
-      document.getElementById('tamilBadge').innerHTML = '✅ Translated to English — Now converting to CRM note...';
-    } catch(ex) {
-      showError('Translation error: ' + ex.message);
-      runBtn.disabled = false;
-      runBtn.innerHTML = '<svg width="17" height="17" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg> RUN AGENT — Convert to CRM Note';
-      return;
-    }
-    runBtn.innerHTML = '<div class="spinner"></div> Converting to CRM Note...';
-  }
+  const rawInput = input;
 
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
@@ -1448,8 +1520,8 @@ async function runAgentWithTamil() {
     else {
       const text = (data.choices && data.choices[0]) ? data.choices[0].message.content.trim() : 'Could not generate note. Please try again.';
       showResult(text);
-      saveTrainingData(rawInput, tamilMode ? input : null, text, currentLang, tamilMode);
-      if (tamilMode) document.getElementById('tamilBadge').innerHTML = '🌟 Tamil Mode — Speaking in Tamil → Will auto-translate to English';
+      saveTrainingData(rawInput, null, text, currentLang, false);
+      
     }
   } catch(ex) { showError('Connection error: ' + ex.message); }
 
@@ -1566,5 +1638,6 @@ document.addEventListener('click', (ev) => {
   }
 });
 </script>
+
 </body>
 </html>
