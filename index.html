@@ -992,7 +992,6 @@ Now convert the following raw voice note into a clean CRM paragraph using the ex
 
 
 document.addEventListener('DOMContentLoaded', function() {
-try {
 
 // ── DOM REFS (assigned on load) ──
 noteInput   = document.getElementById('noteInput');
@@ -1140,8 +1139,6 @@ document.querySelectorAll('.lang-btn').forEach(btn => {
   });
 });
 
-} catch(initErr) { console.error('CRM Agent init error:', initErr); }
-
 });
 
 // ── API KEY ──
@@ -1245,7 +1242,9 @@ function createRecognition() {
   if (!isRecording) return;
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   recognition = new SR();
-  recognition.lang = currentLang;
+  // For Tamil mode use en-IN — handles Tanglish better than ta-IN
+  // The AI translation step converts it to English regardless
+  recognition.lang = tamilMode ? 'en-IN' : currentLang;
   recognition.continuous = false;
   recognition.interimResults = true;
   recognition.maxAlternatives = 1;
