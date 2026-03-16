@@ -1237,10 +1237,12 @@ async function startRecording() {
     return;
   }
 
-  document.getElementById('micStatus').textContent = 'Waiting for permission...';
-  document.getElementById('micHint').textContent   = 'Click Allow in the browser popup ↑';
+  // Only show "waiting" if we haven't asked yet
+  if (permState === 'prompt') {
+    document.getElementById('micStatus').textContent = 'Waiting for permission...';
+    document.getElementById('micHint').textContent   = 'Click Allow in the browser popup ↑';
+  }
 
-  // Go straight to recognition — it handles permission itself
   finalTranscript = noteInput.value.trim();
   isRecording = true;
   setMicUI(true);
@@ -1281,15 +1283,25 @@ function createRecognition() {
 
   recognition.onerror = (ev) => {
     if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed') {
-      showVoiceWarning('Microphone blocked. Allow mic in browser settings and refresh.');
+      showVoiceWarning('Microphone blocked. Click 🔒 in address bar → Microphone → Allow → Refresh.');
       isRecording = false; setMicUI(false);
+    } else if (ev.error === 'audio-capture') {
+      showVoiceWarning('No microphone found. Please connect a microphone and try again.');
+      isRecording = false; setMicUI(false);
+    } else if (ev.error === 'network') {
+      // Network error — just restart silently
+      if (isRecording) {
+        restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 500);
+      }
     }
+    // 'no-speech' is handled by onend restart — do nothing here
   };
 
   recognition.onend = () => {
     document.getElementById('liveBubble').classList.remove('show');
     if (isRecording) {
-      restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 120);
+      // Small delay prevents rapid-fire restart on no-speech timeouts
+      restartTimer = setTimeout(() => { if (isRecording) createRecognition(); }, 250);
     }
   };
 
