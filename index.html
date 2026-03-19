@@ -899,21 +899,7 @@ body {
         <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" id="ftChevron"><polyline points="6,9 12,15 18,9"/></svg>
       </button>
       <!-- Dropdown -->
-      <div id="ftDropdown" class="ft-dropdown" style="display:none;">
-        <div class="ft-dd-title">Training Dataset</div>
-        <div class="ft-dd-count" id="ftDropdownCount">No sessions saved yet</div>
-        <div class="ft-dd-btns">
-          <button id="dataViewBtn" onclick="openModal();toggleFtDropdown();" class="ft-dd-btn ft-dd-view">
-            📋 View All Sessions
-          </button>
-          <button id="dataExportBtn" class="ft-dd-btn ft-dd-export">
-            ⬇ Export JSONL for Fine-tuning
-          </button>
-          <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
-            🗑 Clear All Data
-          </button>
-        </div>
-      </div>
+      
     </div>
     <div class="header-badge">AI · Groq</div>
   </div>
@@ -1828,12 +1814,28 @@ function toggleFtDropdown(ev) {
 // Close dropdown when clicking outside
 document.addEventListener('click', (ev) => {
   const wrap = document.getElementById('ftDropdownWrap');
-  if (wrap && !wrap.contains(ev.target)) {
-    document.getElementById('ftDropdown').style.display = 'none';
+  const dd   = document.getElementById('ftDropdown');
+  if (wrap && !wrap.contains(ev.target) && dd && !dd.contains(ev.target)) {
+    dd.style.display = 'none';
     document.getElementById('ftChevron').style.transform = '';
   }
 });
 </script>
 
+<div id="ftDropdown" class="ft-dropdown" style="display:none;">
+        <div class="ft-dd-title">Training Dataset</div>
+        <div class="ft-dd-count" id="ftDropdownCount">No sessions saved yet</div>
+        <div class="ft-dd-btns">
+          <button id="dataViewBtn" onclick="openModal();toggleFtDropdown();" class="ft-dd-btn ft-dd-view">
+            📋 View All Sessions
+          </button>
+          <button id="dataExportBtn" class="ft-dd-btn ft-dd-export">
+            ⬇ Export JSONL for Fine-tuning
+          </button>
+          <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
+            🗑 Clear All Data
+          </button>
+        </div>
+      </div>
 </body>
 </html>
