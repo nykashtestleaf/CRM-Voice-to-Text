@@ -803,10 +803,9 @@ body {
         <div class="api-hint" id="apiHint">
           Get free key → <strong>console.groq.com</strong> → API Keys → Create Key
         </div>
-        <!-- Quick-copy key bar -->
-        <div class="copy-key-bar">
-          <span class="copy-key-label">🔑 Your Key</span>
-          <span class="copy-key-masked" id="copyKeyMasked">gsk_FaSs••••••••••••••••i77h</span>
+        <!-- 12hr key status bar -->
+        <div class="copy-key-bar" id="keyExpiryBar" style="display:none;">
+          <span class="copy-key-label" id="keyExpiryLabel">⏱ Key valid for 12hrs</span>
           <button class="copy-key-btn" id="copyKeyBtn">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copy Key
@@ -1031,10 +1030,25 @@ clearBtn    = document.getElementById('clearBtn');
 connectBtn.addEventListener('click', () => {
   const val = apiKeyInput.value.trim();
   validateKey(val);
-  if (val) { try { sessionStorage.setItem('crm_groq_key', val); } catch(e2) {} }
+  if (val && val.startsWith('gsk_') && val.length > 20) {
+    try {
+      localStorage.setItem('crm_api_key', val);
+      localStorage.setItem('crm_api_key_ts', Date.now().toString());
+    } catch(e2) {}
+  }
 });
 apiKeyInput.addEventListener('input', () => validateKey(apiKeyInput.value));
-micBtn.addEventListener('click', () => { isRecording ? stopRecording() : startRecording(); });
+micBtn.addEventListener('click', () => {
+  if (!isRecording) {
+    const k = apiKeyInput.value.trim();
+    if (!k || !k.startsWith('gsk_') || k.length < 20) {
+      showError('Paste your Groq API key and click Connect before recording.');
+      document.getElementById('apiKeyInput').focus();
+      return;
+    }
+  }
+  isRecording ? stopRecording() : startRecording();
+});
 noteInput.addEventListener('input', updateCharCount);
 clearBtn.addEventListener('click', () => { noteInput.value=''; finalTranscript=''; updateCharCount(); document.getElementById('liveBubble').classList.remove('show'); });
 copyBtn.addEventListener('click', () => {
@@ -1070,14 +1084,18 @@ newNoteBtn.addEventListener('click', () => {
 runBtn.addEventListener('click', runAgentWithTamil);
 
 // ── INIT ──
-  // Restore saved key — also auto-load STORED_KEY on first visit
+  // Restore key from localStorage if within 12 hours
   try {
-    const saved = sessionStorage.getItem('crm_groq_key');
-    if (saved && saved.startsWith('gsk_') && saved.length > 20) {
-      apiKeyInput.value = saved; validateKey(saved);
-    } else if (STORED_KEY) {
-      apiKeyInput.value = STORED_KEY; validateKey(STORED_KEY);
-      try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(ex) {}
+    const saved     = localStorage.getItem('crm_api_key');
+    const savedTime = parseInt(localStorage.getItem('crm_api_key_ts') || '0');
+    const TWELVE_HRS = 12 * 60 * 60 * 1000;
+    if (saved && saved.startsWith('gsk_') && saved.length > 20 && (Date.now() - savedTime) < TWELVE_HRS) {
+      apiKeyInput.value = saved;
+      validateKey(saved);
+    } else {
+      // Clear expired key
+      localStorage.removeItem('crm_api_key');
+      localStorage.removeItem('crm_api_key_ts');
     }
   } catch(e) {}
 
@@ -1125,25 +1143,17 @@ document.getElementById('apiEditBtn').addEventListener('click', () => {
 
 document.getElementById('copyKeyBtn').addEventListener('click', () => {
   const btn = document.getElementById('copyKeyBtn');
-  // Instantly paste key into the input field and activate
-  const input = document.getElementById('apiKeyInput');
-  input.value = STORED_KEY;
-  validateKey(STORED_KEY);
-  try { sessionStorage.setItem('crm_groq_key', STORED_KEY); } catch(ex) {}
-  // Visual feedback
-  const origHTML = btn.innerHTML;
-  btn.innerHTML = '✅ Connected!';
-  btn.classList.add('copied');
-  setTimeout(() => {
-    btn.innerHTML = origHTML;
-    btn.classList.remove('copied');
-  }, 2500);
-  // Also copy to clipboard silently (best-effort)
+  const currentKey = apiKeyInput.value.trim() || localStorage.getItem('crm_api_key') || '';
+  if (!currentKey) return;
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(STORED_KEY).catch(() => {});
+      navigator.clipboard.writeText(currentKey).catch(() => {});
     }
   } catch(ex) {}
+  const origHTML = btn.innerHTML;
+  btn.innerHTML = '✅ Copied!';
+  btn.classList.add('copied');
+  setTimeout(() => { btn.innerHTML = origHTML; btn.classList.remove('copied'); }, 2000);
 });
 
 document.getElementById('dataViewBtn').addEventListener('click', openModal);
@@ -1199,6 +1209,18 @@ function lockApiKey(val) {
     lockedRow.classList.add('show');
     inputRow.style.display = 'none';
   }
+  // Save to localStorage with 12hr expiry and show expiry bar
+  try {
+    const ts = parseInt(localStorage.getItem('crm_api_key_ts') || '0');
+    const bar = document.getElementById('keyExpiryBar');
+    const lbl = document.getElementById('keyExpiryLabel');
+    if (bar) bar.style.display = 'flex';
+    if (lbl && ts) {
+      const expiresAt = ts + 12 * 60 * 60 * 1000;
+      const hoursLeft = Math.max(0, Math.round((expiresAt - Date.now()) / 3600000));
+      lbl.textContent = hoursLeft > 0 ? '⏱ Key valid for ~' + hoursLeft + 'hr' : '⏱ Key expires soon';
+    }
+  } catch(ex) {}
 }
 
 function unlockApiKey() {
@@ -1209,6 +1231,8 @@ function unlockApiKey() {
     inputRow.style.display = '';
     document.getElementById('apiKeyInput').focus();
   }
+  const bar = document.getElementById('keyExpiryBar');
+  if (bar) bar.style.display = 'none';
 }
 
 function validateKey(val) {
@@ -1236,11 +1260,13 @@ function validateKey(val) {
     btn.textContent   = 'Connect';
     btn.classList.remove('connected-state');
     unlockApiKey();
+    // Clear stored key if invalid
+    try { localStorage.removeItem('crm_api_key'); localStorage.removeItem('crm_api_key_ts'); } catch(e) {}
   }
 }
 
-// Edit button — unlock the key field// ── COPY KEY ──
-const STORED_KEY = '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';
+// ── COPY KEY ──
+const STORED_KEY = ''; // Removed — user pastes manually
 // ── LANGUAGE ──
 
 // ── MIC ──
@@ -1510,7 +1536,12 @@ async function runAgentWithTamil() {
   let input = noteInput.value.trim();
   const apiKey = apiKeyInput.value.trim();
   hideError();
-  if (!apiKey) { showError('Please paste your Groq API key and click Connect first.'); return; }
+  // Block until a valid API key is connected
+  if (!apiKey || !apiKey.startsWith('gsk_') || apiKey.length < 20) {
+    showError('Paste your Groq API key in the top-left panel and click Connect first.');
+    document.getElementById('apiKeyInput').focus();
+    return;
+  }
   if (!input)  { noteInput.focus(); showError('Please add a note — speak using the mic or paste manually.'); return; }
 
   runBtn.disabled = true;
