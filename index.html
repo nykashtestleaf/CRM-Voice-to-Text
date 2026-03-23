@@ -71,8 +71,7 @@ body {
 }
 
 /* All real content above bg */
-.header, .main { position: relative; z-index: 1; }
-.main { max-width: 100% !important; padding: 16px !important; box-sizing: border-box; }
+.header, .main { position: relative; z-index: 1; max-width: 100%; padding: 20px 24px; box-sizing: border-box; }
 
 /* ── Keyframes ── */
 @keyframes scanLine    { 0%{left:-80%} 100%{left:180%} }
@@ -97,7 +96,7 @@ body {
 ══════════════════════════════════ */
 .header {
   position: relative; overflow: hidden;
-  padding: 12px 18px;
+  padding: 14px 24px;
   display: flex; align-items: center; justify-content: space-between;
   background: rgba(255,255,255,0.68);
   backdrop-filter: var(--blur);
@@ -129,8 +128,8 @@ body {
   animation: titleShine 5s linear infinite;
 }
 .header-sub {
-  font-size:11px; color:var(--t2); margin-top:2px;
-  display:flex; align-items:center; gap:6px; font-weight:500;
+  font-size:11.5px; color:var(--t2); margin-top:3px;
+  display:flex; align-items:center; gap:7px; font-weight:500; letter-spacing:0.1px;
 }
 .live-indicator { position:relative; display:inline-flex; align-items:center; justify-content:center; width:8px; height:8px; }
 .live-indicator-dot { width:6px; height:6px; border-radius:50%; background:var(--teal); display:block; }
@@ -220,7 +219,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 16px;
+  gap: 20px;
   height: calc(100vh - 220px);
   min-height: 460px;
   align-items: stretch;
@@ -262,7 +261,7 @@ body {
 
 .panel-header {
   display:flex; align-items:center; justify-content:space-between;
-  padding: 13px 18px 11px;
+  padding: 14px 20px 13px;
   border-bottom: 1px solid rgba(255,255,255,0.75);
   background: rgba(255,255,255,0.30);
   position: relative; z-index: 1;
@@ -272,7 +271,7 @@ body {
   text-transform:uppercase; letter-spacing:1px;
   display:flex; align-items:center; gap:6px;
 }
-.panel-body { padding:14px; position:relative; z-index:1; flex:1; display:flex; flex-direction:column; min-height:0; }
+.panel-body { padding:18px; position:relative; z-index:1; flex:1; display:flex; flex-direction:column; min-height:0; gap:10px; }
 
 /* Per-panel: top accent stripe */
 .api-panel::after    { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--teal),var(--cyan)); border-radius:var(--r) var(--r) 0 0; z-index:2; }
@@ -313,7 +312,7 @@ body {
 }
 
 .result-actions {
-  display:flex; gap:8px; flex-wrap:wrap;
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:4px;
 }
 
 .copy-btn {
@@ -370,7 +369,7 @@ body {
    NOTE PANEL — textarea + helpers
 ══════════════════════════════════ */
 .note-textarea {
-  width:100%; flex:1; min-height:60px; box-sizing:border-box;
+  width:100%; flex:1; min-height:80px; box-sizing:border-box;
   padding:12px 14px; border-radius:12px;
   background:rgba(255,255,255,0.65);
   border:1px solid rgba(255,255,255,0.9);
@@ -467,7 +466,7 @@ body {
 
 /* Voice panel body — mic-area takes remaining space */
 .voice-panel .panel-body { gap:0; }
-.mic-area { flex:1; }
+.mic-area { flex:1; display:flex; align-items:center; gap:16px; padding:14px 16px; background:rgba(255,255,255,0.55); border-radius:16px; border:1.5px solid rgba(255,255,255,0.85); }
 
 /* Note panel body — textarea grows */
 .note-panel .panel-body { gap:0; }
@@ -487,7 +486,7 @@ body {
    RUN BUTTON
 ══════════════════════════════════ */
 .run-btn {
-  width:100%; padding:18px; margin-bottom:22px;
+  width:100%; padding:16px; margin-bottom:10px;
   color:#fff; border:none; border-radius:16px;
   font-size:14px; font-weight:900; letter-spacing:1.4px; text-transform:uppercase;
   font-family:'DM Sans',system-ui,sans-serif;
@@ -543,7 +542,7 @@ body {
 .connect-btn:active { transform:translateY(1px); }
 .connect-btn.connected-state { background:linear-gradient(135deg,var(--teal),var(--green)); }
 
-.api-hint { font-size:11.5px; color:var(--t2); line-height:1.5; font-weight:500; }
+.api-hint { font-size:12px; color:var(--t2); line-height:1.6; font-weight:500; margin-top:6px; }
 .api-hint.success { color:var(--teal); font-weight:700; }
 
 /* Copy key bar */
@@ -632,7 +631,7 @@ body {
 }
 .jarvis-tip strong { color:var(--violet); }
 
-.lang-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; justify-content:center; }
+.lang-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px; justify-content:center; }
 .lang-btn {
   padding:5px 12px; border-radius:30px;
   border:1px solid rgba(67,97,238,0.25);
@@ -1100,7 +1099,7 @@ body {
         <span class="live-indicator"><span class="live-indicator-ring"></span><span class="live-indicator-dot"></span></span>
         <span class="live-text">LIVE</span>
         <span style="color:rgba(255,255,255,0.25);">·</span>
-        Zoho CRM · Voice-to-Note · Tamil Nadu Edition
+        Zoho CRM · Voice-to-Note
       </div>
     </div>
   </div>
@@ -1534,15 +1533,9 @@ document.getElementById('modalOverlay').addEventListener('click', (e) => { if (e
 
 document.getElementById('dataExportBtn').addEventListener('click', () => {
   const records = getTrainingData();
-  if (records.length === 0) { alert('No data to export yet. Run the agent first.'); return; }
+  if (records.length === 0) { alert('No sessions to export yet. Run the agent first.'); return; }
   const jsonl = records.map(r => JSON.stringify(r.finetune)).join('\n');
-  const blob = new Blob([jsonl], { type: 'application/json' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = 'crm-finetune-data-' + new Date().toISOString().slice(0,10) + '.jsonl';
-  a.click();
-  URL.revokeObjectURL(url);
+  triggerDownload(jsonl, 'application/json', 'crm-finetune-' + new Date().toISOString().slice(0,10) + '.jsonl');
 });
 
 document.getElementById('dataClearBtn').addEventListener('click', () => {
@@ -1981,16 +1974,33 @@ function saveTrainingData(rawInput, translatedInput, crmOutput, lang, wasTamil) 
   let records = [];
   try { records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(ex) {}
   const entry = {
-    id: Date.now(), timestamp: new Date().toISOString(), lang, tamil_mode: wasTamil,
-    raw_input: rawInput, translated_input: wasTamil ? translatedInput : null, crm_output: crmOutput,
+    id: Date.now(),
+    session_no: records.length + 1,
+    timestamp: new Date().toISOString(),
+    date_readable: new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+    lang,
+    raw_input: rawInput,
+    crm_output: crmOutput,
+    word_count: crmOutput.trim().split(/\s+/).length,
     finetune: { messages: [
       { role: 'system', content: SYSTEM_PROMPT },
-      { role: 'user',   content: wasTamil ? translatedInput : rawInput },
+      { role: 'user',   content: rawInput },
       { role: 'assistant', content: crmOutput }
     ]}
   };
   records.push(entry);
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(records)); updateDataCount(); } catch(ex) {}
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    updateDataCount();
+  } catch(ex) {
+    // Storage full — try removing oldest records
+    try {
+      records.shift();
+      records.push(entry);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+      updateDataCount();
+    } catch(ex2) {}
+  }
 }
 
 function getTrainingData() {
@@ -2010,20 +2020,47 @@ function openModal() {
   const records = getTrainingData();
   const body = document.getElementById('modalBody');
   if (records.length === 0) {
-    body.innerHTML = '<div style="text-align:center;padding:40px;color:#94a3b8;"><div style="font-size:40px;margin-bottom:12px;">🧠</div><div>No data saved yet. Run the agent to start building your fine-tune dataset.</div></div>';
+    body.innerHTML = `
+      <div style="text-align:center;padding:48px 20px;">
+        <div style="font-size:48px;margin-bottom:14px;">📂</div>
+        <div style="font-size:15px;font-weight:700;color:#1a1f3a;margin-bottom:6px;">No sessions saved yet</div>
+        <div style="font-size:13px;color:#64748b;">Run the agent to start saving sessions</div>
+      </div>`;
   } else {
-    body.innerHTML = records.slice().reverse().map((r, i) => {
-      const num = records.length - i;
-      const date = new Date(r.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
-      const langTag = r.tamil_mode ? '<span class="lang-tag tamil">🌟 Tamil</span>' : '<span class="lang-tag">' + r.lang + '</span>';
-      return '<div class="data-entry">' +
-        '<div class="data-entry-header"><div class="data-entry-num">Session #' + num + langTag + '</div><div class="data-entry-meta">' + date + '</div></div>' +
-        '<div class="data-entry-body">' +
-          (r.tamil_mode && r.raw_input ? '<div class="data-field-label">Tamil Input</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
-          (r.tamil_mode && r.translated_input ? '<div class="data-field-label">Translated</div><div class="data-field-value">' + escHtml(r.translated_input) + '</div>' : '') +
-          (!r.tamil_mode ? '<div class="data-field-label">Raw Note</div><div class="data-field-value">' + escHtml(r.raw_input) + '</div>' : '') +
-          '<div class="data-field-label">CRM Output</div><div class="data-field-value" style="background:#eff6ff;border-left:3px solid #2563eb;">' + escHtml(r.crm_output) + '</div>' +
-        '</div></div>';
+    const totalSessions = records.length;
+    const headerHtml = `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:0 2px 14px;border-bottom:1px solid #e8ecf4;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:700;color:#1a1f3a;">
+          <span style="background:linear-gradient(135deg,#4361ee,#7209b7);color:#fff;padding:3px 10px;border-radius:20px;font-size:11px;margin-right:8px;">${totalSessions}</span>
+          Total Sessions
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button onclick="downloadAllSessions('csv')" style="padding:6px 12px;border-radius:10px;border:none;background:#f0f4ff;color:#4361ee;font-size:11px;font-weight:700;cursor:pointer;">⬇ CSV</button>
+          <button onclick="downloadAllSessions('json')" style="padding:6px 12px;border-radius:10px;border:none;background:#f0f4ff;color:#4361ee;font-size:11px;font-weight:700;cursor:pointer;">⬇ JSON</button>
+          <button onclick="downloadAllSessions('txt')" style="padding:6px 12px;border-radius:10px;border:none;background:#f0f4ff;color:#4361ee;font-size:11px;font-weight:700;cursor:pointer;">⬇ TXT</button>
+        </div>
+      </div>`;
+
+    body.innerHTML = headerHtml + records.slice().reverse().map((r, i) => {
+      const num = r.session_no || (records.length - i);
+      const date = r.date_readable || new Date(r.timestamp).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+      const words = r.word_count || (r.crm_output ? r.crm_output.trim().split(/\s+/).length : 0);
+      return `<div class="data-entry">
+        <div class="data-entry-header">
+          <div class="data-entry-num">
+            <span style="background:#4361ee;color:#fff;padding:2px 8px;border-radius:8px;font-size:10px;">#${num}</span>
+            <span style="color:#64748b;font-size:11px;">${date}</span>
+            <span style="color:#94a3b8;font-size:10px;">${words} words</span>
+          </div>
+          <button onclick="downloadSession(${r.id})" style="padding:4px 10px;border-radius:8px;border:none;background:#f0f4ff;color:#4361ee;font-size:10px;font-weight:700;cursor:pointer;">⬇ Save</button>
+        </div>
+        <div class="data-entry-body">
+          <div class="data-field-label">Raw Voice Note</div>
+          <div class="data-field-value">${escHtml(r.raw_input)}</div>
+          <div class="data-field-label">CRM Output</div>
+          <div class="data-field-value" style="background:#f0f7ff;border-left:3px solid #4361ee;padding:10px 12px;">${escHtml(r.crm_output)}</div>
+        </div>
+      </div>`;
     }).join('');
   }
   document.getElementById('modalOverlay').classList.add('show');
@@ -2032,6 +2069,96 @@ function closeModal() { document.getElementById('modalOverlay').classList.remove
 
 function escHtml(t) {
   return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ══════════════════════════════════════════════════
+// SESSION DOWNLOAD FUNCTIONS
+// ══════════════════════════════════════════════════
+
+function downloadSession(sessionId) {
+  const records = getTrainingData();
+  const r = records.find(rec => rec.id === sessionId);
+  if (!r) return;
+  const date = (r.date_readable || new Date(r.timestamp).toLocaleDateString('en-IN')).replace(/[/:,\s]/g, '-');
+  const num = r.session_no || records.indexOf(r) + 1;
+  const txt = [
+    'CRM VOICE-TO-TEXT — SESSION #' + num,
+    'Date: ' + (r.date_readable || new Date(r.timestamp).toLocaleString('en-IN')),
+    '='.repeat(60),
+    '',
+    'RAW VOICE NOTE:',
+    r.raw_input,
+    '',
+    'CRM OUTPUT:',
+    r.crm_output,
+    '',
+    '='.repeat(60),
+    'Exported from CRM Voice-to-Text'
+  ].join('\n');
+  triggerDownload(txt, 'text/plain', 'session-' + num + '-' + date + '.txt');
+}
+
+function downloadAllSessions(format) {
+  const records = getTrainingData();
+  if (!records.length) { alert('No sessions to download.'); return; }
+  const date = new Date().toISOString().slice(0, 10);
+  let content, mime, filename;
+
+  if (format === 'csv') {
+    const header = ['Session#', 'Date', 'Raw Note', 'CRM Output', 'Words'];
+    const rows = records.map(r => [
+      r.session_no || '',
+      '"' + (r.date_readable || new Date(r.timestamp).toLocaleString('en-IN')).replace(/"/g, '""') + '"',
+      '"' + (r.raw_input || '').replace(/"/g, '""') + '"',
+      '"' + (r.crm_output || '').replace(/"/g, '""') + '"',
+      r.word_count || (r.crm_output ? r.crm_output.trim().split(' ').length : 0)
+    ]);
+    content = [header.join(','), ...rows.map(r => r.join(','))].join('\n');
+    mime = 'text/csv';
+    filename = 'crm-sessions-' + date + '.csv';
+
+  } else if (format === 'json') {
+    const exportData = records.map(r => ({
+      session_no: r.session_no,
+      date: r.date_readable || new Date(r.timestamp).toLocaleString('en-IN'),
+      raw_note: r.raw_input,
+      crm_output: r.crm_output,
+      word_count: r.word_count
+    }));
+    content = JSON.stringify({ exported: new Date().toISOString(), total: records.length, sessions: exportData }, null, 2);
+    mime = 'application/json';
+    filename = 'crm-sessions-' + date + '.json';
+
+  } else { // txt
+    content = records.map((r, i) => [
+      'SESSION #' + (r.session_no || i + 1),
+      'Date: ' + (r.date_readable || new Date(r.timestamp).toLocaleString('en-IN')),
+      '-'.repeat(50),
+      'RAW NOTE:',
+      r.raw_input || '',
+      '',
+      'CRM OUTPUT:',
+      r.crm_output || '',
+      '='.repeat(60)
+    ].join('\n')).join('\n\n');
+    content = 'CRM VOICE-TO-TEXT — ALL SESSIONS\nExported: ' + new Date().toLocaleString('en-IN') + '\n\n' + content;
+    mime = 'text/plain';
+    filename = 'crm-sessions-' + date + '.txt';
+  }
+
+  triggerDownload(content, mime, filename);
+}
+
+function triggerDownload(content, mime, filename) {
+  const blob = new Blob([content], { type: mime });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 // ── DROPDOWN TOGGLE ──
@@ -2071,7 +2198,13 @@ document.addEventListener('click', (ev) => {
             📋 View All Sessions
           </button>
           <button id="dataExportBtn" class="ft-dd-btn ft-dd-export">
-            ⬇ Export JSONL for Fine-tuning
+            ⬇ Export JSONL (Fine-tuning)
+          </button>
+          <button onclick="downloadAllSessions('csv');toggleFtDropdown();" class="ft-dd-btn" style="background:rgba(67,97,238,0.07);color:#4361ee;">
+            📊 Download CSV
+          </button>
+          <button onclick="downloadAllSessions('txt');toggleFtDropdown();" class="ft-dd-btn" style="background:rgba(0,201,167,0.07);color:#00c9a7;">
+            📄 Download TXT
           </button>
           <button id="dataClearBtn" class="ft-dd-btn ft-dd-clear">
             🗑 Clear All Data
