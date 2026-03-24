@@ -469,7 +469,17 @@ body {
 ══════════════════════════════════ */
 /* API panel body — push copy-key-bar to bottom */
 .api-panel .panel-body { gap:0; justify-content:flex-start; }
-.copy-key-bar { margin-top:auto; padding-top:10px; }
+.copy-key-bar {
+  margin-top: auto;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.60);
+  border: 1.5px solid rgba(0,201,167,0.20);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
 
 /* Voice panel body — mic-area takes remaining space */
 .voice-panel .panel-body { gap:0; }
@@ -487,7 +497,7 @@ body {
 
 .api-panel.connected::after { background:linear-gradient(90deg,var(--teal),var(--green)); }
 .api-panel.connected .panel-header { background:rgba(0,201,167,0.06); }
-.api-panel.connected .panel-title  { color:var(--teal); }
+.api-panel.connected .panel-title  { color:var(--teal); font-weight:800; }
 
 /* ══════════════════════════════════
    RUN BUTTON
@@ -550,7 +560,7 @@ body {
 .connect-btn.connected-state { background:linear-gradient(135deg,var(--teal),var(--green)); }
 
 .api-hint { font-size:12px; color:var(--t2); line-height:1.6; font-weight:500; margin-top:6px; }
-.api-hint.success { color:var(--teal); font-weight:700; }
+.api-hint.success { color:var(--teal); font-weight:700; font-size:12px; margin-top:4px; }
 
 /* Copy key bar */
 .copy-key-bar {
@@ -563,7 +573,7 @@ body {
 .copy-key-label  { font-size:10.5px; font-weight:800; color:var(--teal); text-transform:uppercase; letter-spacing:.7px; white-space:nowrap; }
 .copy-key-masked { font-size:11.5px; font-family:monospace; color:var(--t2); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .copy-key-btn {
-  display:flex; align-items:center; gap:5px;
+  display:flex; align-items:center; gap:6px;
   background: linear-gradient(135deg,var(--teal),var(--blue));
   color:#fff; border:none; border-radius:var(--r-xs);
   padding:6px 12px; font-size:11px; font-weight:900;
@@ -579,7 +589,7 @@ body {
 /* Locked row */
 .api-locked-row {
   display:none; align-items:center; justify-content:space-between; gap:10px;
-  margin-bottom:10px;
+  margin-bottom:8px;
   background: rgba(0,201,167,0.07);
   border:1px solid rgba(0,201,167,0.30);
   border-radius:var(--r-sm); padding:10px 13px;
@@ -588,8 +598,8 @@ body {
 .api-locked-row.show { display:flex; }
 .api-locked-key { font-size:12.5px; font-family:monospace; color:var(--teal); font-weight:700; letter-spacing:.8px; flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .api-edit-btn {
-  background:rgba(255,255,255,0.80); border:1px solid rgba(0,201,167,0.35);
-  border-radius:var(--r-xs); padding:6px 12px;
+  background:rgba(255,255,255,0.85); border:1.5px solid rgba(0,201,167,0.30);
+  border-radius:12px; padding:7px 14px;
   font-size:11.5px; font-weight:800; color:var(--teal);
   cursor:pointer; font-family:'DM Sans',system-ui,sans-serif; transition:all .15s;
   white-space:nowrap; flex-shrink:0;
@@ -1099,7 +1109,29 @@ body {
 .mic-btn.recording {
   box-shadow: none !important;
   animation: liquidFlow 3s ease infinite, micGlow 1.8s ease infinite !important;
-}</style>
+}
+/* ── API Panel Connected State — clean clay look ── */
+.api-panel.connected .panel-body {
+  gap: 8px;
+}
+.api-locked-row.show {
+  display: flex !important;
+}
+.api-locked-key {
+  font-size: 13px !important;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  color: var(--t1) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+}
+.copy-key-label {
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: var(--t3) !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+}
+</style>
 </head>
 <body>
 <!-- HEADER -->
